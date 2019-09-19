@@ -1,0 +1,33 @@
+
+body{
+    background: gainsboro;
+}
+
+.nav-tabs{
+    float: right;
+    margin: 25px 20px 0 0;
+}
+nav ul li a{
+    color: rgb(61, 108, 132);
+}
+nav ul li a:hover{
+    color:rgb(48, 38, 66);
+}
+.dropdown-item:active{
+    background-color: rgb(61, 108, 132);
+}
+.card{
+    border: solid 1px gray;
+    height: 600px;
+    border-radius: 10px;
+    padding: 20px;
+    background: white;
+}
+
+.btn{
+    width: 250px;
+}
+.list-group{
+    padding-top: 20px;
+    width: 250px;
+}
