@@ -17,7 +17,8 @@ class InsumoController extends Controller
     public function index()
     {
         $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','!=','Administracion']])->get();
-        return view('vistas.actualizarstock',compact('sector'));
+        $supplies = Insumo::all();
+        return view('vistas.actualizarstock',compact('sector','supplies'));
     }
 
     /**
@@ -117,6 +118,16 @@ class InsumoController extends Controller
                 }
                 return response()->json($arraycategorias);
             }   
+        }
+    }
+    public function getSupplies(Request $request){
+        if ($request->ajax()) {
+            $supplies = Insumo::where([['FK_Id_Categoria', $request->FK_Id_Categoria],['Estado_Insumo', 'Activo']])->get();
+            // var_dump($supplies);
+            foreach ($supplies as $sup) {
+                $arraysupplies[$sup->Id_Insumo] = $sup;
+            }
+            return response()->json($arraysupplies);
         }
     }
 }

@@ -42,18 +42,7 @@
                 </thead>
                 
                 <tbody id="tbody-table-supplies">
-                    <tr>
-                    <td>1</td>
-                    <td>Item 1</td>
-                    <td>$1</td>
-                    </tr>
 
-                    <tr>
-                    <td>2</td>
-                    <td>Item 2</td>
-                    <td>$2</td>
-                    </tr>
-                
                 </tbody>
             </table>
         </div>
@@ -66,7 +55,7 @@
 @section('script')
 <script>
 
-    $(document).ready(function(){
+$(document).ready(function(){
         $('#select-sectores').on('change',function(){
             let sectorElegido = $(this).val();
             if ($.trim(sectorElegido) != '') {
@@ -83,17 +72,23 @@
     });
 
     $(document).ready(function(){
-        $('#table-supplies').on('change',function() {
-            let categoriaElegida = $(this).val();
-            if ($.trim(sectorElegido) != '') {
-                $.get('insumo',{FK_Id_Cagoria: categoriaElegida},function(insumos) {
-                    console.log(insumos);
-                    $('#tbody-table-supplies').empty();
-                    $('#tbody-table-supplies').append('<option selected>CATEGORIA</option>');
-                    $.each(categorias,function(index, value) {
-                    $('#tbody-table-supplies').append("<option value='"+ index +"'> "+ value +"</option>");
+        $('#select-categories').on('change',function() {
+            let chosenCategory = $(this).val()
+            console.log(chosenCategory)
+            $.get('table-supplies',{FK_Id_Categoria: chosenCategory},function(supplies) {
+
+                console.log(supplies)
+                $('#tbody-table-supplies').empty()
+                $.each(supplies,function(index, value) {
+                $('#table-supplies').append('<tr><td>' + value.Nombre_Insumo + '</td><td>' + 
+                            value.Nro_Articulo + '</td><td>' + 
+                                    value.Referencia + '</td><td>' +
+                                            value.NroLote + '</td><td>' +
+                                                    value.Stock_Actual + '</td><td>' +
+                                                            value.PDP + '</td><td>' +
+                                                                    value.Unidad_Medida  + '</td></tr>' )
                 })
-            }
+            })
         })
     })
 

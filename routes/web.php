@@ -28,6 +28,5 @@ Route::get('/miPrimerRuta', function(){
 });
 
 Route::get('/insumo','InsumoController@index');
-
 Route::get('/categoria','InsumoController@getCategorias');
-
+Route::get('/table-supplies','InsumoController@getSupplies');
