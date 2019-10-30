@@ -30,14 +30,15 @@
                     <tr>
                         <th data-sortable="true"> Nombre </th>
                         <th> Nro. Articulo </th>
-                        <th> Referencia </th>
+                        {{-- <th> Referencia </th> --}}
                         <th> Nro. de Lote </th>
                         <th> Actual </th>
                         <th> General </th>
                         <th> PDP </th>
-                        <th> Unidad de medida </th>
-                        <th> Ultima fecha de uso </th>
-                        <th> Fecha de vencimiento </th>
+                        {{-- <th> Unidad de medida </th> --}}
+                        {{-- <th> Ultima fecha de uso </th> --}}
+                        {{-- <th> Fecha de vencimiento </th> --}}
+                        <th> Decrementar </th>
                     </tr>
                 </thead>
                 
@@ -82,11 +83,14 @@ $(document).ready(function(){
                 $.each(supplies,function(index, value) {
                 $('#table-supplies').append('<tr><td>' + value.Nombre_Insumo + '</td><td>' + 
                             value.Nro_Articulo + '</td><td>' + 
-                                    value.Referencia + '</td><td>' +
+                                    // value.Referencia + '</td><td>' +
                                             value.NroLote + '</td><td>' +
                                                     value.Stock_Actual + '</td><td>' +
-                                                            value.PDP + '</td><td>' +
-                                                                    value.Unidad_Medida  + '</td></tr>' )
+                                                            value.Stock_Actual + '</td><td>' +
+                                                                value.PDP + '</td><td>' +
+                                                                '<button type="button" class="btn btn-info">Decrementar</button>'+ '</td></tr>'
+                                                                    // value.Unidad_Medida   + '</td></tr>'
+                                                                     )
                 })
             })
         })
