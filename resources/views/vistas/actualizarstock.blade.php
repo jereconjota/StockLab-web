@@ -88,7 +88,7 @@ $(document).ready(function(){
                                                     value.Stock_Actual + '</td><td>' +
                                                             value.Stock_Actual + '</td><td>' +
                                                                 value.PDP + '</td><td>' +
-                                                                '<button type="button" class="btn btn-info">Decrementar</button>'+ '</td></tr>'
+                                                                '<a href="/stock/decrementar" class="btn btn-info">Decrementar</a>'+ '</td></tr>'
                                                                     // value.Unidad_Medida   + '</td></tr>'
                                                                      )
                 })

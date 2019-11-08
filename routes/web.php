@@ -15,7 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('stock','CRUDstock');
 
 Route::get('prueba/{name}', 'PruebaController@prueba');
 
@@ -26,6 +25,9 @@ Route::get('/name/{name}', function($name){
 Route::get('/miPrimerRuta', function(){
     return 'Hola mundo';
 });
+
+
+Route::resource('stock','InsumoController');
 
 Route::get('/insumo','InsumoController@index');
 Route::get('/categoria','InsumoController@getCategorias');
