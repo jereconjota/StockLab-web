@@ -69,9 +69,17 @@ class InsumoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Insumo $supplie)
+
+    // public function show(Insumo $supplie)
+    // {
+    //     // var_dump($supplie);
+    //     return view('vistas.show',compact('supplie'));
+    // }
+
+    public function show($id)
     {
-        // $supplie = Insumo::find($Id_Insumo);
+        // $supplie = Insumo::where('Id_Insumo',$id);
+        $supplie = Insumo::find($id);
         return view('vistas.show',compact('supplie'));
     }
 

@@ -5,7 +5,8 @@
 @section('content')    
     <div class="card text-center border-info my-5">
         <div class="card-header">
-            <h1>{{$supplie->NombreInsumo}}</h1>
+            <h1>{{$supplie->Nombre_Insumo}}</h1>
+            {{-- @dd($supplie) --}}
         </div>
         <div class="card-body">
             <h5 class="card-title">Stock de insumo</h5>

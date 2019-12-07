@@ -32,3 +32,7 @@ Route::resource('stock','InsumoController');
 Route::get('/insumo','InsumoController@index');
 Route::get('/categoria','InsumoController@getCategorias');
 Route::get('/table-supplies','InsumoController@getSupplies');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

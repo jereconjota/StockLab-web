@@ -25,19 +25,18 @@
 
 
         <div class="row table-responsive">
-            <table id="table-supplies" data-toggle="table" data-pagination="true" data-search="true"> {{--data-url="data1.json" --}}
+            <table id="table-supplies" 
+            data-toggle="table" 
+            data-pagination="true" 
+            data-search="true"> {{--data-url="data1.json" --}}
                 <thead>
                     <tr>
                         <th data-sortable="true"> Nombre </th>
                         <th> Nro. Articulo </th>
-                        {{-- <th> Referencia </th> --}}
                         <th> Nro. de Lote </th>
                         <th> Actual </th>
                         <th> General </th>
                         <th> PDP </th>
-                        {{-- <th> Unidad de medida </th> --}}
-                        {{-- <th> Ultima fecha de uso </th> --}}
-                        {{-- <th> Fecha de vencimiento </th> --}}
                         <th> Decrementar </th>
                     </tr>
                 </thead>
@@ -46,6 +45,7 @@
 
                 </tbody>
             </table>
+            
         </div>
     
 
@@ -88,7 +88,7 @@ $(document).ready(function(){
                                                     value.Stock_Actual + '</td><td>' +
                                                             value.Stock_Actual + '</td><td>' +
                                                                 value.PDP + '</td><td>' +
-                                                                '<a href="/stock/decrementar" class="btn btn-info">Decrementar</a>'+ '</td></tr>'
+                                                                '<a href="/stock/'+value.Id_Insumo+'" class="btn btn-info">Decrementar</a>'+ '</td></tr>'
                                                                     // value.Unidad_Medida   + '</td></tr>'
                                                                      )
                 })
