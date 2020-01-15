@@ -23,30 +23,30 @@
 
     </div>
 
-
-        <div class="row table-responsive">
-            <table id="table-supplies" 
-            data-toggle="table" 
-            data-pagination="true" 
-            data-search="true"> {{--data-url="data1.json" --}}
-                <thead>
-                    <tr>
-                        <th data-sortable="true"> Nombre </th>
-                        <th> Nro. Articulo </th>
-                        <th> Nro. de Lote </th>
-                        <th> Actual </th>
-                        <th> General </th>
-                        <th> PDP </th>
-                        <th> Decrementar </th>
-                    </tr>
-                </thead>
-                
-                <tbody id="tbody-table-supplies">
-
-                </tbody>
-            </table>
+    <div class="row table-responsive">
+        <table id="table-supplies" 
+        data-toggle="table" 
+        data-pagination="true" 
+        data-search="true">
+        {{-- data-url="data1.json">  --}}
+            <thead>
+                <tr>
+                    <th data-sortable="true"> Nombre </th>
+                    <th> Nro. Articulo </th>
+                    <th> Nro. de Lote </th>
+                    <th> Actual </th>
+                    <th> General </th>
+                    <th> PDP </th>
+                    <th> Decrementar </th>
+                </tr>
+            </thead>
             
-        </div>
+            <tbody id="tbody-table-supplies">
+
+            </tbody>
+        </table>
+        
+    </div>
     
 
 
@@ -56,7 +56,7 @@
 @section('script')
 <script>
 
-$(document).ready(function(){
+    $(document).ready(function(){
         $('#select-sectores').on('change',function(){
             let sectorElegido = $(this).val();
             if ($.trim(sectorElegido) != '') {
@@ -81,7 +81,7 @@ $(document).ready(function(){
                 console.log(supplies)
                 $('#tbody-table-supplies').empty()
                 $.each(supplies,function(index, value) {
-                $('#table-supplies').append('<tr><td>' + value.Nombre_Insumo + '</td><td>' + 
+                $('#table-supplies').append('<tr class="clickable-row"><td>' + value.Nombre_Insumo + '</td><td>' + 
                             value.Nro_Articulo + '</td><td>' + 
                                     // value.Referencia + '</td><td>' +
                                             value.NroLote + '</td><td>' +
@@ -95,6 +95,24 @@ $(document).ready(function(){
             })
         })
     })
+    
 
+    // $('#table-supplies').on('click', '.clickable-row', function(event, row, $element) {
+    //     // window.location = $(this).data("");
+    //     console.log('sarasa')
+    //     console.log(row)
+    // });
+
+    // var $table = $('#table-supplies')
+    // $(function () {
+    //     $table.on('click-row.bs.table', function (e, row, $element) {
+    //     alert(JSON.stringify(row))
+    //     })
+    // })
+
+        $("#table-supplies").on('click', 'click-row.bs.table', function (e, row, $element) {
+            // window.location = $element.data('href');
+            console.log('sarasa')
+        });
 </script>    
 @endsection

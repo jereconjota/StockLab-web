@@ -29,7 +29,7 @@ Route::get('/miPrimerRuta', function(){
 
 Route::resource('stock','InsumoController');
 
-Route::get('/insumo','InsumoController@index');
+Route::get('/actualizar-stock','InsumoController@index');
 Route::get('/categoria','InsumoController@getCategorias');
 Route::get('/table-supplies','InsumoController@getSupplies');
 
