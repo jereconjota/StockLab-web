@@ -6,8 +6,8 @@
     html, body {
         background-color: #fff;
         color: #0097cd;
-        font-family: 'Nunito', sans-serif;
-        font-weight: 200;
+        /* font-family: 'Nunito', sans-serif;
+        font-weight: 600; */
         height: 100vh;
         margin: 0;
     }

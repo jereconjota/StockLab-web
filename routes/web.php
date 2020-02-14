@@ -36,3 +36,5 @@ Route::get('/table-supplies','InsumoController@getSupplies');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::resource('component', 'forComponents');
