@@ -18,7 +18,7 @@ class InsumoController extends Controller
     {
         $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','!=','Administracion']])->get();
         $supplies = Insumo::all();
-        return view('vistas.actualizarstock',compact('sector','supplies'));
+        return view('vistas.index',compact('sector','supplies'));
     }
 
     /**
@@ -91,7 +91,8 @@ class InsumoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $supplie = Insumo::find($id);
+        return view('vistas.edit',compact('supplie'));
     }
 
     /**
@@ -103,7 +104,7 @@ class InsumoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return 'updated';
     }
 
     /**

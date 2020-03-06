@@ -66,7 +66,7 @@
             </div>
 
             <div class="links">
-                <a href="http://stocklab-web.test/actualizar-stock">Actualizar Stock</a>
+                <a href="http://stocklab-web.test/stock">Actualizar Stock</a>
                 <a>Movimientos</a>
                 <a>Ayuda</a>
             </div>

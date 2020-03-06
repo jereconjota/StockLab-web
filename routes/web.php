@@ -29,9 +29,13 @@ Route::get('/miPrimerRuta', function(){
 
 Route::resource('stock','InsumoController');
 
-Route::get('/actualizar-stock','InsumoController@index');
+// Route::get('/actualizar-stock','InsumoController@index');
+// Route::post('/actualizar-stock','InsumoController@store');
+
+
 Route::get('/categoria','InsumoController@getCategorias');
 Route::get('/table-supplies','InsumoController@getSupplies');
+
 
 Auth::routes();
 
