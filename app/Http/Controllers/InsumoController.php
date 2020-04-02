@@ -17,8 +17,9 @@ class InsumoController extends Controller
     public function index()
     {
         $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','!=','Administracion']])->get();
-        $supplies = Insumo::all();
-        return view('vistas.index',compact('sector','supplies'));
+        // $supplies = Insumo::where([['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0]])->get();
+        // $supplies = Insumo::all();
+        return view('vistas.index',compact('sector'));
     }
 
     /**
@@ -76,11 +77,11 @@ class InsumoController extends Controller
     //     return view('vistas.show',compact('supplie'));
     // }
 
-    public function show($id)
+    public function show(Insumo $supplie)
     {
-        // $supplie = Insumo::where('Id_Insumo',$id);
-        $supplie = Insumo::find($id);
+        // $supplie = Insumo::find($id);
         return view('vistas.show',compact('supplie'));
+       
     }
 
     /**
@@ -91,9 +92,10 @@ class InsumoController extends Controller
      */
     public function edit($id)
     {
-        $supplie = Insumo::find($id);
+        $supplie = Insumo::find($id);        
         return view('vistas.edit',compact('supplie'));
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -104,7 +106,12 @@ class InsumoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return 'updated';
+        $supplie = Insumo::find($id);
+        $supplie->Stock_Actual = $supplie->Stock_Actual - $request->unidades;
+        // $supplie->update(['Stock_Actual' => $supplie->Stock_Actual - $request->unidades]);
+        $supplie->save();
+        return redirect()->route('stock.index')->with('success','Item created successfully!');
+
     }
 
     /**
@@ -132,7 +139,7 @@ class InsumoController extends Controller
     }
     public function getSupplies(Request $request){
         if ($request->ajax()) {
-            $supplies = Insumo::where([['FK_Id_Categoria', $request->FK_Id_Categoria],['Estado_Insumo', 'Activo']])->get();
+            $supplies = Insumo::where([['FK_Id_Categoria', $request->FK_Id_Categoria],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0]])->get();
             // var_dump($supplies);
             foreach ($supplies as $sup) {
                 $arraysupplies[$sup->Id_Insumo] = $sup;
