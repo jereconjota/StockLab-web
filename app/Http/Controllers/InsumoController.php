@@ -108,7 +108,7 @@ class InsumoController extends Controller
     {
         $supplie = Insumo::find($id);
         $supplie->Stock_Actual = $supplie->Stock_Actual - $request->unidades;
-        // $supplie->update(['Stock_Actual' => $supplie->Stock_Actual - $request->unidades]);
+        // $supplie->Stock_Actual = $supplie->Stock_Actual - $request->get('unidades');
         $supplie->save();
         return redirect()->route('stock.index')->with('success','Item created successfully!');
 
@@ -139,7 +139,7 @@ class InsumoController extends Controller
     }
     public function getSupplies(Request $request){
         if ($request->ajax()) {
-            $supplies = Insumo::where([['FK_Id_Categoria', $request->FK_Id_Categoria],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0]])->get();
+            $supplies = Insumo::where([['FK_Id_Categoria', $request->FK_Id_Categoria],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0]])->paginate(10);
             // var_dump($supplies);
             foreach ($supplies as $sup) {
                 $arraysupplies[$sup->Id_Insumo] = $sup;

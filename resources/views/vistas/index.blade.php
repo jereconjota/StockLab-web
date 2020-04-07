@@ -5,7 +5,6 @@
 @section('content')    
 
     <div class="row my-2">
-        <h1>INDEX</h1>
         <div class="col-md-3">
             <select name="sectors" id="select-sectores" class="browser-default custom-select">
                 <option selected>SECTOR</option>
@@ -24,20 +23,22 @@
     </div>
 
     <div class="row table-responsive">
-        <table id="table-supplies" 
+        {{-- <table id="table-supplies" 
         data-toggle="table" 
         data-pagination="true" 
-        data-search="true">
+        data-search="true"> --}}
         {{-- data-url="data1.json">  --}}
+        <table id="table-supplies" class="table table-bordered">
+            <caption>Lista de insumos de la categoria seleccionada</caption>
             <thead>
-                <tr>
-                    <th data-sortable="true"> Nombre </th>
-                    <th> Nro. Articulo </th>
-                    <th> Nro. de Lote </th>
-                    <th> Actual </th>
-                    <th> General </th>
-                    <th> PDP </th>
-                    <th> Decrementar </th>
+                <tr class="table-info">
+                    <th scope="col" data-sortable="true"> Nombre </th>
+                    <th scope="col"> Nro. Articulo </th>
+                    <th scope="col"> Nro. de Lote </th>
+                    <th scope="col"> Actual </th>
+                    <th scope="col"> General </th>
+                    <th scope="col"> PDP </th>
+                    <th scope="col"> Decrementar </th>
                 </tr>
             </thead>
             
@@ -47,21 +48,22 @@
         </table>
         
     </div>
-    
+    <modal-supplie-edit-stock></modal-supplie-edit-stock>   
+    @include('edit')
 
-
+  
 
 @endsection
 
 @section('script')
-<script>
+<script type="text/javascript">
 
     $(document).ready(function(){
         $('#select-sectores').on('change',function(){
             let sectorElegido = $(this).val();
             if ($.trim(sectorElegido) != '') {
                 $.get('categoria',{FK_Id_Sector: sectorElegido}, function(categorias) {
-                    console.log(categorias);
+                    // console.log(categorias);
                     $('#select-categories').empty();
                     $('#select-categories').append('<option selected>CATEGORIA</option>');
                     $.each(categorias,function(index, value) {
@@ -71,14 +73,14 @@
             }
         });
     });
-
+    let insumo_seleccionado
     $(document).ready(function(){
         $('#select-categories').on('change',function() {
             let chosenCategory = $(this).val()
-            console.log(chosenCategory)
+            // console.log(chosenCategory)
             $.get('table-supplies',{FK_Id_Categoria: chosenCategory},function(supplies) {
 
-                console.log(supplies)
+                // console.log(supplies)
                 $('#tbody-table-supplies').empty()
                 $.each(supplies,function(index, value) {
                 $('#table-supplies').append('<tr class="clickable-row"><td>' + value.Nombre_Insumo + '</td><td>' + 
@@ -88,7 +90,8 @@
                                                     value.Stock_Actual + '</td><td>' +
                                                             value.Stock_Actual + '</td><td>' +
                                                                 value.PDP + '</td><td>' +
-                                                                '<a href="/stock/'+value.Id_Insumo+'/edit" class="btn btn-info">Decrementar</a>'+ '</td></tr>'
+                                                                '<a href="/stock/'+value.Id_Insumo+'/edit" class="btn btn-info" data-toggle="modal" data-target="#editstocksupplie">Decrementar</a>'+ '</td></tr>'
+                                                                // '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editstocksupplie">Decrementar</button>'+ '</td></tr>'
                                                                     // value.Unidad_Medida   + '</td></tr>'
                                                                      )
                 })
@@ -96,23 +99,13 @@
         })
     })
     
+    // $(document).ready(function($) {
+    //     $("#table-supplies").click(function() {
+    //         // window.document.location = $(this).data("href");
+    //         // console.log($(this).data())
+    //         $('#editstocksupplie').modal('show')
 
-    // $('#table-supplies').on('click', '.clickable-row', function(event, row, $element) {
-    //     // window.location = $(this).data("");
-    //     console.log('sarasa')
-    //     console.log(row)
+    //     });
     // });
-
-    // var $table = $('#table-supplies')
-    // $(function () {
-    //     $table.on('click-row.bs.table', function (e, row, $element) {
-    //     alert(JSON.stringify(row))
-    //     })
-    // })
-
-        $("#table-supplies").on('click', 'click-row.bs.table', function (e, row, $element) {
-            // window.location = $element.data('href');
-            console.log('sarasa')
-        });
 </script>    
 @endsection
