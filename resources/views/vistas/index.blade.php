@@ -23,11 +23,6 @@
     </div>
 
     <div class="row table-responsive">
-        {{-- <table id="table-supplies" 
-        data-toggle="table" 
-        data-pagination="true" 
-        data-search="true"> --}}
-        {{-- data-url="data1.json">  --}}
         <table id="table-supplies" class="table table-bordered">
             <caption>Lista de insumos de la categoria seleccionada</caption>
             <thead>
@@ -46,17 +41,48 @@
 
             </tbody>
         </table>
-        
     </div>
-    <modal-supplie-edit-stock></modal-supplie-edit-stock>   
-    @include('edit')
+    {{-- <modal-supplie-edit-stock></modal-supplie-edit-stock>    --}}
 
-  
-
-@endsection
-
-@section('script')
-<script type="text/javascript">
+    <div class="modal fade" id="editstocksupplie" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle" ></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h2>DETALLE</h2>
+                        <div class="border-info">
+                            <p class="card-text">Nro de lote:  <br>
+                            Nro de articulo:  <br>
+                            Nro de Referencia:  <br>
+                            PDP:  <br>
+                            Fecha de Vencimiento: <br>
+                            <i>Ultima fecha de uso: </i></p>
+                            <h2 class="card-title"> STOCK ACTUAL: </h2>
+                        </div>
+                        <form class="form-group">
+                            <div class="col-6 mx-auto mx-3">
+                                <div class="form-group input-group mb-3" width="30">
+                                    <input type="number" value="1" min="0" step="1" class="form-control">                    
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-primary">decrementar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    @endsection
+    
+    @section('script')
+    <script type="text/javascript">
 
     $(document).ready(function(){
         $('#select-sectores').on('change',function(){
@@ -67,45 +93,31 @@
                     $('#select-categories').empty();
                     $('#select-categories').append('<option selected>CATEGORIA</option>');
                     $.each(categorias,function(index, value) {
-                    $('#select-categories').append("<option value='"+ index +"'> "+ value +"</option>");
+                        $('#select-categories').append("<option value='"+ index +"'> "+ value +"</option>");
                     }); 
                 });
             }
         });
     });
-    let insumo_seleccionado
     $(document).ready(function(){
         $('#select-categories').on('change',function() {
             let chosenCategory = $(this).val()
-            // console.log(chosenCategory)
             $.get('table-supplies',{FK_Id_Categoria: chosenCategory},function(supplies) {
-
-                // console.log(supplies)
                 $('#tbody-table-supplies').empty()
                 $.each(supplies,function(index, value) {
-                $('#table-supplies').append('<tr class="clickable-row"><td>' + value.Nombre_Insumo + '</td><td>' + 
-                            value.Nro_Articulo + '</td><td>' + 
-                                    // value.Referencia + '</td><td>' +
-                                            value.NroLote + '</td><td>' +
-                                                    value.Stock_Actual + '</td><td>' +
-                                                            value.Stock_Actual + '</td><td>' +
-                                                                value.PDP + '</td><td>' +
-                                                                '<a href="/stock/'+value.Id_Insumo+'/edit" class="btn btn-info" data-toggle="modal" data-target="#editstocksupplie">Decrementar</a>'+ '</td></tr>'
-                                                                // '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editstocksupplie">Decrementar</button>'+ '</td></tr>'
-                                                                    // value.Unidad_Medida   + '</td></tr>'
-                                                                     )
+                $('#table-supplies').append('<tr class="clickable-row"><td>' + 
+                    value.Nombre_Insumo + '</td><td>' + 
+                        value.Nro_Articulo + '</td><td>' + 
+                        value.NroLote + '</td><td>' +
+                        value.Stock_Actual + '</td><td>' +
+                        value.Stock_Actual + '</td><td>' +
+                        value.PDP + '</td><td>' +
+                        '<a href="/stock/'+value.Id_Insumo+'/edit" class="btn btn-info" data-toggle="modal" data-target="#editstocksupplie">Decrementar</a>'+ '</td></tr>'                        
+                        )
                 })
             })
         })
     })
-    
-    // $(document).ready(function($) {
-    //     $("#table-supplies").click(function() {
-    //         // window.document.location = $(this).data("href");
-    //         // console.log($(this).data())
-    //         $('#editstocksupplie').modal('show')
 
-    //     });
-    // });
-</script>    
+    </script>    
 @endsection

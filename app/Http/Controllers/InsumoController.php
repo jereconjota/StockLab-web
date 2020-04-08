@@ -18,7 +18,7 @@ class InsumoController extends Controller
     {
         $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','!=','Administracion']])->get();
         // $supplies = Insumo::where([['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0]])->get();
-        // $supplies = Insumo::all();
+        $supplies = Insumo::paginate(15);
         return view('vistas.index',compact('sector'));
     }
 
@@ -145,6 +145,8 @@ class InsumoController extends Controller
                 $arraysupplies[$sup->Id_Insumo] = $sup;
             }
             return response()->json($arraysupplies);
+            
         }
     }
+
 }

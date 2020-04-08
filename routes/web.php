@@ -36,6 +36,11 @@ Route::resource('stock','InsumoController');
 Route::get('/categoria','InsumoController@getCategorias');
 Route::get('/table-supplies','InsumoController@getSupplies');
 
+Route::get('supplie/{id}', 'editSupplieController@supplieToEdit');
+
+Route::get('/about','InsumoController@about');
+
+
 
 Auth::routes();
 

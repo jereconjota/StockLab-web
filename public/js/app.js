@@ -1768,22 +1768,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+  // data(){
+  //     return{
+  //         supplie,
+  //     }
+  // },
+  mounted: function mounted() {
+    $(this).data("href");
+  }
+});
 
 /***/ }),
 
@@ -37255,14 +37249,10 @@ var staticRenderFns = [
           [
             _c("div", { staticClass: "modal-content" }, [
               _c("div", { staticClass: "modal-header" }, [
-                _c(
-                  "h5",
-                  {
-                    staticClass: "modal-title",
-                    attrs: { id: "exampleModalLongTitle" }
-                  },
-                  [_vm._v("Nombre Insumo")]
-                ),
+                _c("h5", {
+                  staticClass: "modal-title",
+                  attrs: { id: "exampleModalLongTitle" }
+                }),
                 _vm._v(" "),
                 _c(
                   "button",
@@ -37306,68 +37296,39 @@ var staticRenderFns = [
                   ])
                 ]),
                 _vm._v(" "),
-                _c(
-                  "form",
-                  {
-                    staticClass: "form-group",
-                    attrs: {
-                      method: "POST",
-                      action: "",
-                      enctype: "multipart/form-data"
-                    }
-                  },
-                  [
-                    _c("div", { staticClass: "col-6 mx-auto mx-3" }, [
-                      _c(
-                        "div",
-                        {
-                          staticClass: "form-group input-group mb-3",
-                          attrs: { width: "30" }
-                        },
-                        [
-                          _c("input", {
-                            staticClass: "form-control",
-                            attrs: {
-                              type: "number",
-                              name: "unidades",
-                              value: "1",
-                              min: "0",
-                              step: "1"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "input-group-append" }, [
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-primary",
-                                attrs: { type: "submit" }
-                              },
-                              [_vm._v("decrementar")]
-                            )
-                          ])
-                        ]
-                      )
-                    ])
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "modal-footer" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-secondary",
-                    attrs: { type: "button", "data-dismiss": "modal" }
-                  },
-                  [_vm._v("Close")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  { staticClass: "btn btn-primary", attrs: { type: "button" } },
-                  [_vm._v("Save changes")]
-                )
+                _c("form", { staticClass: "form-group" }, [
+                  _c("div", { staticClass: "col-6 mx-auto mx-3" }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "form-group input-group mb-3",
+                        attrs: { width: "30" }
+                      },
+                      [
+                        _c("input", {
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "number",
+                            value: "1",
+                            min: "0",
+                            step: "1"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "input-group-append" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary",
+                              attrs: { type: "submit" }
+                            },
+                            [_vm._v("decrementar")]
+                          )
+                        ])
+                      ]
+                    )
+                  ])
+                ])
               ])
             ])
           ]
