@@ -14,11 +14,15 @@ class InsumoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        if (!empty($request->user())) {
+            $request->user()->authorizeRoles(['admin']);
+        }
+
         $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','!=','Administracion']])->get();
         // $supplies = Insumo::where([['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0]])->get();
-        $supplies = Insumo::paginate(15);
+        // $supplies = Insumo::paginate(15);
         return view('vistas.index',compact('sector'));
     }
 

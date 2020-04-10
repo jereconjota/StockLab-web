@@ -51,6 +51,9 @@
         text-decoration: none;
         text-transform: uppercase;
     }
+    .links > a:hover {
+        color: #0097cd;
+    }
 
     .m-b-md {
         margin-bottom: 30px;
@@ -69,7 +72,8 @@
 
             <div class="links">
                 <a href="http://stocklab-web.test/stock">Actualizar Stock</a>
-                <a>Movimientos</a>
+                <a href="http://stocklab-web.test/stock">Ver PDP</a>
+                <a href="http://stocklab-web.test/movimientos">Movimientos</a>
                 <a href="#" data-toggle="modal" data-target="#about">Ayuda</a>
             </div>
         </div>

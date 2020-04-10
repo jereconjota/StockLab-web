@@ -3,8 +3,9 @@
 namespace StockLab\Http\Controllers;
 
 use Illuminate\Http\Request;
+use StockLab\Movimiento;
 
-class UsuarioController extends Controller
+class MovementsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +14,8 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        //
+        $movements = Movimiento::paginate(10);
+        return view('vistas.movements',compact('movements')); 
     }
 
     /**

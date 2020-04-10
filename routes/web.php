@@ -14,36 +14,35 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/home', 'HomeController@index')->name('home');
 
 
+//Pruebas
 Route::get('prueba/{name}', 'PruebaController@prueba');
-
 Route::get('/name/{name}', function($name){
     return 'Hola soy '. $name;
 });
-
 Route::get('/miPrimerRuta', function(){
     return 'Hola mundo';
 });
+//Fin pruebas
 
 
+
+//CONTROLADOR INSUMOS
 Route::resource('stock','InsumoController');
-
 // Route::get('/actualizar-stock','InsumoController@index');
 // Route::post('/actualizar-stock','InsumoController@store');
-
-
 Route::get('/categoria','InsumoController@getCategorias');
 Route::get('/table-supplies','InsumoController@getSupplies');
-
-Route::get('supplie/{id}', 'editSupplieController@supplieToEdit');
-
-Route::get('/about','InsumoController@about');
+//FIN CONTROLADOR INSUMOS
 
 
+//CONTROLADOR MOVIMIENTOS
+Route::resource('movimientos','MovementsController');
 
+
+//AUTENTICACION
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('component', 'forComponents');
