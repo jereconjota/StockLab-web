@@ -28,7 +28,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="">
+                <a class="navbar-brand" href="#">
                     <img src="img/diagnosdahinten.png" height="30" class="d-inline-block align-top" alt="">
                 </a>
                 {{-- <a class="navbar-brand" href="{{ url('/') }}">
@@ -41,7 +41,7 @@
                             <span class="navbar-toggler-icon"></span>
                         </button>
                     </div>
-                    <a class="navbar-brand text-center w-100" href="{{ url('/') }}"><img src="img/iconoStockLab.png" height="30" class="" alt=""></a>
+                    <a class="navbar-brand text-center w-100" href="{{ url('/home') }}"><img src="img/iconoStockLab.png" height="30" class="" alt=""></a>
                     <span class="w-100"></span>
                 </div>
 
