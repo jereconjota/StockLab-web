@@ -74,7 +74,7 @@ class InsumoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id)
+    public function update(Request $request, $id)
     {
         $supplie = Insumo::find($id);
         $supplie->Stock_Actual = $supplie->Stock_Actual - $request->unidades;
