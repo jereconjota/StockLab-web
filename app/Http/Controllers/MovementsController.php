@@ -12,8 +12,11 @@ class MovementsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        if (!empty($request->user())) {
+            $request->user()->authorizeRoles(['admin']);
+        }
         $movements = Movimiento::paginate(10);
         return view('vistas.movements',compact('movements')); 
     }

@@ -68,6 +68,7 @@
             <div class="title m-b-md">
                 StokLab
                 {{-- <img src="img/iconoStockLab.png" alt=""> --}}
+                {{$ip}}
             </div>
 
             <div class="links">

@@ -13,6 +13,15 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::get('insumos', function(){
+    // return StockLab\Insumo::all();
+    return datatables()
+        ->eloquent(StockLab\Insumo::query())
+        ->addColumn('btn', 'vistas/actions')
+        ->rawColumns(['btn'])
+        ->toJson();
 });

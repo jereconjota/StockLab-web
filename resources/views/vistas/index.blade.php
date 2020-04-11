@@ -2,8 +2,12 @@
 
 @section('title','Actualizar Stock')
 
-@section('content')    
+@section('styles')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css"> 
+@endsection
 
+@section('content')    
     <div class="row my-2">
         <div class="col-md-3">
             <select name="sectors" id="select-sectores" class="browser-default custom-select">
@@ -22,7 +26,7 @@
 
     </div>
 
-    <div class="row table-responsive">
+    <div class="row table-responsive my-4">
         <table id="table-supplies" class="table table-bordered">
             <caption>Lista de insumos de la categoria seleccionada</caption>
             <thead>
@@ -118,6 +122,12 @@
             })
         })
     })
-
+    $(document).ready(function() {
+        $('#table-supplies').DataTable({
+            "language": {
+                'url' : '//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json'
+                }
+        });
+    });
     </script>    
 @endsection

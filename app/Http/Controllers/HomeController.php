@@ -21,8 +21,10 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('/welcome');
+        $ip = $request->ip();
+        // $clientIP = \Request::getClientIp(true);
+        return view('/welcome',compact('ip'));
     }
 }

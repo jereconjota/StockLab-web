@@ -25,6 +25,12 @@ Route::get('/name/{name}', function($name){
 Route::get('/miPrimerRuta', function(){
     return 'Hola mundo';
 });
+Route::get('/dt', function () {
+    $sector= StockLab\Sector::all();
+    $categoria= StockLab\Categoria::all();
+    return view('ejemplodatatable/datatable', compact('sector','categoria'));
+
+});
 //Fin pruebas
 
 
