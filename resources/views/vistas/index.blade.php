@@ -70,7 +70,7 @@
                             </div>
                         </form> --}}
                         <form id="formeditarinsumo" name="formeditarinsumo" class="form-horizontal">
-                            @csrf
+                            {{-- @csrf --}}
                             <input type="hidden" name="Id_Insumo" id="Id_Insumo">
                              
                             <div class="form-group">
@@ -94,7 +94,19 @@
     
     @section('script')
     <script type="text/javascript">
-
+    $(function () {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        }); 
+    $(document).ready(function() {
+        var tablaInsumos = $('#table-supplies').DataTable({
+            "language": {
+                // 'url' : '//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json'
+            }
+        });
+    });
         $(document).ready(function(){
             $('#select-sectores').on('change',function(){
                 let sectorElegido = $(this).val();
@@ -132,20 +144,9 @@
             })
         })
 
-$(function () {
-    //   $.ajaxSetup({
-    //       headers: {
-    //           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    //       }
-    // });   
+  
             
-    $(document).ready(function() {
-        var tablaInsumos = $('#table-supplies').DataTable({
-                    "language": {
-                        'url' : '//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json'
-                        }
-                });
-            });
+    
     $('body').on('click', '.editInsumo', function () {
             var Id_Insumo = $(this).data('id');
             $.get("{{ route('stock.index') }}" +'/' + Id_Insumo +'/edit', function (data) {
@@ -161,29 +162,28 @@ $(function () {
         })
     })  
 
-    $('#editBtn').click(function (e) {
-        e.preventDefault();
-        $(this).html('Save');
-        console.log($('#formeditarinsumo').serialize())
-        $.ajax({
-            data: $('#formeditarinsumo').serialize(),
-            url: "{{ route('stock.store') }}",
-            type: "POST",
-            dataType: 'json',
-            success: function (data) {
-                console.log('2'+data)
-                // $('#formeditarinsumo').trigger("reset");
-                // $('#editstocksupplie').modal('hide');
-                // tablaInsumos.draw();
+        $('#editBtn').click(function (e) {
+            e.preventDefault();
+            $(this).html('Save');
+            console.log($('#formeditarinsumo').serialize())
+            $.ajax({
+                // data: $('#formeditarinsumo').serialize(),
+                url: "{{ route('stock.store') }}",
+                type: "POST",
+                // dataType: 'json',
+                success: function (data) {
+                    $('#formeditarinsumo').trigger("reset");
+                    $('#editstocksupplie').modal('hide');
+                    tablaInsumos.draw();
+                },
+                error: function (data) {
+                    console.log('Error: '+data);
+                
+                }
+        });
+        });    
+    });
 
-            },
-            error: function (data) {
-                console.log(data);
-               
-            }
-      });
-    });    
-});
 
     </script>    
 @endsection

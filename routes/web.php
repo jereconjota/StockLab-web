@@ -35,11 +35,8 @@ Route::get('drecremento-correcto','InsumoController@decrementoCorrecto');
 //Fin pruebas
 
 
-
 //CONTROLADOR INSUMOS
 Route::resource('stock','InsumoController');
-// Route::get('/actualizar-stock','InsumoController@index');
-// Route::post('/actualizar-stock','InsumoController@store');
 Route::get('/categoria','InsumoController@getCategorias');
 Route::get('/table-supplies','InsumoController@getSupplies');
 //FIN CONTROLADOR INSUMOS
@@ -51,5 +48,4 @@ Route::resource('movimientos','MovementsController');
 
 //AUTENTICACION
 Auth::routes();
-
 
