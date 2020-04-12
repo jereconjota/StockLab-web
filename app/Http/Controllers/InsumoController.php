@@ -75,10 +75,8 @@ class InsumoController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
         Insumo::updateOrCreate(['Id_Insumo' => $request->Id_Insumo],
                 [ 'Stock_Actual' => $request->Stock_Actual - $request->unidades]);
-
         return response()->json(['success'=>'Stock actualizado correctamente']);
     }
 

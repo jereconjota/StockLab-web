@@ -94,19 +94,7 @@
     
     @section('script')
     <script type="text/javascript">
-    $(function () {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        }); 
-    $(document).ready(function() {
-        var tablaInsumos = $('#table-supplies').DataTable({
-            "language": {
-                // 'url' : '//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json'
-            }
-        });
-    });
+   
         $(document).ready(function(){
             $('#select-sectores').on('change',function(){
                 let sectorElegido = $(this).val();
@@ -145,7 +133,19 @@
         })
 
   
-            
+        $(function () {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        }); 
+    $(document).ready(function() {
+        var tablaInsumos = $('#table-supplies').DataTable({
+            "language": {
+                // 'url' : '//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json'
+            }
+        });
+    });   
     
     $('body').on('click', '.editInsumo', function () {
             var Id_Insumo = $(this).data('id');
@@ -165,13 +165,13 @@
         $('#editBtn').click(function (e) {
             e.preventDefault();
             $(this).html('Save');
-            console.log($('#formeditarinsumo').serialize())
             $.ajax({
-                // data: $('#formeditarinsumo').serialize(),
+                data: $('#formeditarinsumo').serialize(),
                 url: "{{ route('stock.store') }}",
                 type: "POST",
-                // dataType: 'json',
+                dataType: 'json',
                 success: function (data) {
+                    console.log(data)
                     $('#formeditarinsumo').trigger("reset");
                     $('#editstocksupplie').modal('hide');
                     tablaInsumos.draw();
