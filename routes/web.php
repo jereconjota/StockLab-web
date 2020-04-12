@@ -31,6 +31,7 @@ Route::get('/dt', function () {
     return view('ejemplodatatable/datatable', compact('sector','categoria'));
 
 });
+Route::get('drecremento-correcto','InsumoController@decrementoCorrecto');
 //Fin pruebas
 
 

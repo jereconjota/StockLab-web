@@ -21,7 +21,7 @@ Route::get('insumos', function(){
     // return StockLab\Insumo::all();
     return datatables()
         ->eloquent(StockLab\Insumo::query())
-        ->addColumn('btn', 'vistas/actions')
+        ->addColumn('btn', 'ejemplodatatable/actions')
         ->rawColumns(['btn'])
         ->toJson();
 });

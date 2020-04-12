@@ -56,16 +56,31 @@ class InsumoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id, Request $request)
+    public function edit($id)
     {
-        if (!empty($request->user())) {
-            $request->user()->authorizeRoles(['admin']);
-        }
+        // if (!empty($request->user())) {
+        //     $request->user()->authorizeRoles(['admin']);
+        // }
 
         $supplie = Insumo::find($id);        
-        return view('vistas.edit',compact('supplie'));
+        // return view('vistas.edit',compact('supplie'));
+        return response()->json($supplie);
     }
 
+  /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        dd($request);
+        Insumo::updateOrCreate(['Id_Insumo' => $request->Id_Insumo],
+                [ 'Stock_Actual' => $request->Stock_Actual - $request->unidades]);
+
+        return response()->json(['success'=>'Stock actualizado correctamente']);
+    }
 
     /**
      * Update the specified resource in storage.
@@ -106,6 +121,10 @@ class InsumoController extends Controller
             return response()->json($arraysupplies);
             
         }
+    }
+
+    public function decrementoCorrecto($selectSector, $selectCategoria){
+        
     }
 
 }
