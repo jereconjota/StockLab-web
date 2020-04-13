@@ -75,9 +75,14 @@ class InsumoController extends Controller
      */
     public function store(Request $request)
     {
-        Insumo::updateOrCreate(['Id_Insumo' => $request->Id_Insumo],
-                [ 'Stock_Actual' => $request->Stock_Actual - $request->unidades]);
-        return response()->json(['success'=>'Stock actualizado correctamente']);
+        // Insumo::updateOrCreate(['Id_Insumo' => $request->Id_Insumo],
+        //         [ 'Stock_Actual' => $request->Stock_Actual - $request->unidades]);
+        // return response()->json(['success'=>'Stock actualizado correctamente']);
+        $supplie = Insumo::find($request->Id_Insumo);
+        $supplie->Stock_Actual = $supplie->Stock_Actual - $request->unidades;
+        // $supplie->Stock_Actual = $supplie->Stock_Actual - $request->get('unidades');
+        $supplie->save();
+        return response()->json(['success'=>'anduvo']);
     }
 
     /**
@@ -121,8 +126,5 @@ class InsumoController extends Controller
         }
     }
 
-    public function decrementoCorrecto($selectSector, $selectCategoria){
-        
-    }
 
 }

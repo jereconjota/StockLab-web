@@ -31,7 +31,6 @@ Route::get('/dt', function () {
     return view('ejemplodatatable/datatable', compact('sector','categoria'));
 
 });
-Route::get('drecremento-correcto','InsumoController@decrementoCorrecto');
 //Fin pruebas
 
 
@@ -39,6 +38,9 @@ Route::get('drecremento-correcto','InsumoController@decrementoCorrecto');
 Route::resource('stock','InsumoController');
 Route::get('/categoria','InsumoController@getCategorias');
 Route::get('/table-supplies','InsumoController@getSupplies');
+
+Route::post('editStock','InsumoController@store');
+
 //FIN CONTROLADOR INSUMOS
 
 

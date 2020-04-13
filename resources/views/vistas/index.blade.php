@@ -94,10 +94,10 @@
     
     @section('script')
     <script type="text/javascript">
-   
+        let sectorElegido
         $(document).ready(function(){
             $('#select-sectores').on('change',function(){
-                let sectorElegido = $(this).val();
+                sectorElegido = $(this).val();
                 if ($.trim(sectorElegido) != '') {
                     $.get('categoria',{FK_Id_Sector: sectorElegido}, function(categorias) {
                         // console.log(categorias);
@@ -110,9 +110,10 @@
                 }
             });
         });
+        let chosenCategory
         $(document).ready(function(){
             $('#select-categories').on('change',function() {
-                let chosenCategory = $(this).val()
+                chosenCategory = $(this).val()
                 $.get('table-supplies',{FK_Id_Categoria: chosenCategory},function(supplies) {
                     $('#tbody-table-supplies').empty()
                     $.each(supplies,function(index, value) {
@@ -131,16 +132,16 @@
                 })
             })
         })
-
   
-        $(function () {
+    $(function () {
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         }); 
+    var tablaInsumos;
     $(document).ready(function() {
-        var tablaInsumos = $('#table-supplies').DataTable({
+        tablaInsumos = $('#table-supplies').DataTable({
             "language": {
                 // 'url' : '//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json'
             }
@@ -162,26 +163,50 @@
         })
     })  
 
+        // $('#editBtn').click(function (e) {
+        //     e.preventDefault();
+        //     $(this).html('Save');
+        //     $.ajax({
+        //         data: $('#formeditarinsumo').serialize(),
+        //         url: "{{ route('stock.store') }}",
+        //         type: "POST",
+        //         dataType: 'json',
+        //         success: function (data) {
+        //             console.log(data)
+        //             $('#formeditarinsumo').trigger("reset");
+        //             $('#editstocksupplie').modal('hide');
+        //             tablaInsumos.draw();
+        //         },
+        //         error: function (data) {
+        //             console.log('Error: '+data);
+                
+        //         }
+        // });
+        // });  
         $('#editBtn').click(function (e) {
             e.preventDefault();
             $(this).html('Save');
             $.ajax({
-                data: $('#formeditarinsumo').serialize(),
-                url: "{{ route('stock.store') }}",
                 type: "POST",
-                dataType: 'json',
+                url: "editStock",
+                data: {
+                    // '_token': $('input[]name=_token').val(),
+                    'unidades': $('#unidades').val(),
+                    'Id_Insumo': $('#Id_Insumo').val(),
+                },
                 success: function (data) {
                     console.log(data)
                     $('#formeditarinsumo').trigger("reset");
                     $('#editstocksupplie').modal('hide');
-                    tablaInsumos.draw();
+                    $('#select-categories').trigger("change")   
+                   
                 },
                 error: function (data) {
                     console.log('Error: '+data);
                 
                 }
         });
-        });    
+        });   
     });
 
 
