@@ -60,17 +60,7 @@
                             Ultima fecha de uso:<h5 id="ultimafechadeuso"></h5>
                             <h3>STOCK ACTUAL</h3> <h3 id="stockactual"></h3>
                         </div>
-                        {{-- <form id="formeditarinsumo" name="formeditarinsumo" class="form-horizontal">
-                            <div class="col-6 mx-auto mx-3">
-                                <div class="form-group input-group mb-3" width="30">
-                                    <div class="input-group-append">
-                                        <button type="submit" class="btn btn-primary" id="editBtn" value="create">Decrementar</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form> --}}
                         <form id="formeditarinsumo" name="formeditarinsumo" class="form-horizontal">
-                            {{-- @csrf --}}
                             <input type="hidden" name="Id_Insumo" id="Id_Insumo">
                              
                             <div class="form-group">
@@ -100,7 +90,6 @@
                 sectorElegido = $(this).val();
                 if ($.trim(sectorElegido) != '') {
                     $.get('categoria',{FK_Id_Sector: sectorElegido}, function(categorias) {
-                        // console.log(categorias);
                         $('#select-categories').empty();
                         $('#select-categories').append('<option selected>CATEGORIA</option>');
                         $.each(categorias,function(index, value) {
@@ -124,7 +113,6 @@
                             value.Stock_Actual + '</td><td>' +
                             value.Stock_Actual + '</td><td>' +
                             value.PDP + '</td><td>' +
-                            // '<a href="/stock/'+value.Id_Insumo+'/edit" class="btn btn-info editInsumo" data-toggle="modal" data-target="#editstocksupplie">Decrementar</a>'+ '</td></tr>'                        
                             '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'+value.Id_Insumo+'" data-original-title="Edit" class="edit btn btn-primary btn-sm editInsumo">Decrementar</a>'+ '</td></tr>'   
                             )
 
@@ -143,7 +131,24 @@
     $(document).ready(function() {
         tablaInsumos = $('#table-supplies').DataTable({
             "language": {
-                // 'url' : '//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json'
+                "info": "_TOTAL_ insumos",
+                            "search": "Buscar",
+                            "paginate": {
+                                "next": "Siguiente",
+                                "previous": "Anterior",
+                            },
+                            "lengthMenu": 'Mostrar <select>'+
+                                            '<option value="10">10</value>'+
+                                            '<option value="20">20</value>'+
+                                            '<option value="30">30</value>'+
+                                            '<option value="-1">Todos</value>'+
+                                            '</select> registros',
+                            "loadingRecords": "Cargando...",
+                            "processing": "Procesando...",
+                            "emptyTable": "No hay datos",
+                            "zeroRecords": "No hay concidencias",
+                            "infoEmpty": "",
+                            "infoFiltered": ""
             }
         });
     });   
@@ -162,27 +167,7 @@
                 $('#Id_Insumo').val(data.Id_Insumo);
         })
     })  
-
-        // $('#editBtn').click(function (e) {
-        //     e.preventDefault();
-        //     $(this).html('Save');
-        //     $.ajax({
-        //         data: $('#formeditarinsumo').serialize(),
-        //         url: "{{ route('stock.store') }}",
-        //         type: "POST",
-        //         dataType: 'json',
-        //         success: function (data) {
-        //             console.log(data)
-        //             $('#formeditarinsumo').trigger("reset");
-        //             $('#editstocksupplie').modal('hide');
-        //             tablaInsumos.draw();
-        //         },
-        //         error: function (data) {
-        //             console.log('Error: '+data);
-                
-        //         }
-        // });
-        // });  
+ 
         $('#editBtn').click(function (e) {
             e.preventDefault();
             $(this).html('Save');
@@ -190,7 +175,6 @@
                 type: "POST",
                 url: "editStock",
                 data: {
-                    // '_token': $('input[]name=_token').val(),
                     'unidades': $('#unidades').val(),
                     'Id_Insumo': $('#Id_Insumo').val(),
                 },

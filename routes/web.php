@@ -40,13 +40,14 @@ Route::get('/categoria','InsumoController@getCategorias');
 Route::get('/table-supplies','InsumoController@getSupplies');
 
 Route::post('editStock','InsumoController@store');
-
 //FIN CONTROLADOR INSUMOS
 
 
 //CONTROLADOR MOVIMIENTOS
 Route::resource('movimientos','MovementsController');
 
+//CONTROLADOR PDP
+Route::resource('pdp', 'PdpController');
 
 //AUTENTICACION
 Auth::routes();

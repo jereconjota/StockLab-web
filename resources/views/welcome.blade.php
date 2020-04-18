@@ -73,8 +73,8 @@
 
             <div class="links">
                 <a href="http://stocklab-web.test/stock">Actualizar Stock</a>
-                <a href="http://stocklab-web.test/stock">Ver PDP</a>
-                <a href="http://stocklab-web.test/movimientos">Movimientos</a>
+                <a href="http://stocklab-web.test/pdp">Ver PDP</a>
+                {{-- <a href="http://stocklab-web.test/movimientos">Movimientos</a> --}}
                 <a href="#" data-toggle="modal" data-target="#about">Ayuda</a>
             </div>
         </div>
@@ -95,9 +95,6 @@
             <a href = "mailto: figo.desarrollos@gmail.com">figo.desarrollos@gmail.com</a>
             </p>
         </div>
-        {{-- <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        </div> --}}
       </div>
     </div>
   </div>
