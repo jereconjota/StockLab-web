@@ -3,7 +3,7 @@
         
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Not Found</title>
+        <title>Restriccion de acceso</title>
 
         <!-- Fonts -->
         <link rel="dns-prefetch" href="http://fonts.gstatic.com/">
@@ -13,7 +13,7 @@
         <style>
             html, body {
                 background-color: #fff;
-                color: #636b6f;
+                color: #0098cd;
                 font-family: 'Nunito', sans-serif;
                 font-weight: 100;
                 height: 100vh;
@@ -50,10 +50,10 @@
     <body>
         <div class="flex-center position-ref full-height">
             <div class="code">
-                404            </div>
+                Acceso denegado            </div>
 
             <div class="message" style="padding: 10px;">
-                Not Found            </div>
+                No te encuentras en una sucursal de Diagnos            </div>
         </div>
     
 

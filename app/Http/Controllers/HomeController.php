@@ -24,7 +24,10 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $ip = $request->ip();
-        // $clientIP = \Request::getClientIp(true);
-        return view('/welcome',compact('ip'));
+        if ($ip === "127.0.0.1" || $ip === "127.0.0.1") {
+            return view('/welcome', compact('ip'));
+        }else{
+            return view('errors.ipincorrecta');
+        }
     }
 }

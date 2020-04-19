@@ -66,9 +66,9 @@
     <div class="flex-center position-ref full-height">
         <div class="content">
             <div class="title m-b-md">
-                StokLab
+                StockLab
                 {{-- <img src="img/iconoStockLab.png" alt=""> --}}
-                {{$ip}}
+                <h4>{{$ip}}</h4>
             </div>
 
             <div class="links">

@@ -32,7 +32,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="#">
-                    <img src="img/diagnosdahinten.png" height="30" class="d-inline-block align-top" alt="">
+                    <img src="img/diagnosdahinten.png" height="30" class="d-inline-block align-top" alt="Laboratorio Diagnos">
                 </a>
                 {{-- <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'StockLab') }}

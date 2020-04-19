@@ -20,6 +20,12 @@ class InsumoController extends Controller
             $request->user()->authorizeRoles(['admin']);
         }
         $ip = $request->ip();
+        // if ($ip === "201.190.238.88" $ip === "168.228.143.124") {
+        //     $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','!=','Administracion']])->get();
+        //     return view('vistas.index',compact('sector','ip'));
+        // }else{
+        //     return view('errors.ipincorrecta');
+        // }
         $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','!=','Administracion']])->get();
         return view('vistas.index',compact('sector','ip'));
     }
