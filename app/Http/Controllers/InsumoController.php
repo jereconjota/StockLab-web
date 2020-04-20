@@ -20,7 +20,7 @@ class InsumoController extends Controller
             $request->user()->authorizeRoles(['admin']);
         }
         $ip = $request->ip();
-        // if ($ip === "201.190.238.88" $ip === "168.228.143.124") {
+        // if ($ip === "201.190.238.88" || $ip === "168.228.143.124") {        
         //     $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','!=','Administracion']])->get();
         //     return view('vistas.index',compact('sector','ip'));
         // }else{
@@ -59,9 +59,13 @@ class InsumoController extends Controller
         //         [ 'Stock_Actual' => $request->Stock_Actual - $request->unidades]);
         // return response()->json(['success'=>'Stock actualizado correctamente']);
         $supplie = Insumo::find($request->Id_Insumo);
+        $nombreInsumo = $supplie->Nombre_Insumo;
         $supplie->Stock_Actual = $supplie->Stock_Actual - $request->unidades;
         $supplie->save();
-        return response()->json(['success'=>'anduvo']);
+        // return response()->json(['success'=>'anduvo']);
+        return response()->json(['success' => 'Valar morghuilis', 'insumo' => $nombreInsumo],200);
+        // return back()->with('success','Item created successfully!');
+
     }
 
     /**
@@ -94,14 +98,13 @@ class InsumoController extends Controller
         }
     }
     public function getSupplies(Request $request){
-        if ($request->ajax()) {
-            $supplies = Insumo::where([['FK_Id_Categoria', $request->FK_Id_Categoria],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0]])->paginate(10);
-            foreach ($supplies as $sup) {
-                $arraysupplies[$sup->Id_Insumo] = $sup;
-            }
-            return response()->json($arraysupplies);
-            
-        }
+        // if ($request->ajax()) {
+            $supplies = Insumo::where([['FK_Id_Categoria', $request->FK_Id_Categoria],['Estado_Insumo', 'Activo']/*,['Stock_Actual','>', 0]*/])->get();
+                foreach ($supplies as $sup) {
+                    $arraysupplies[$sup->Id_Insumo] = $sup;
+                }
+                return response()->json($arraysupplies);
+        // }
     }
 
 

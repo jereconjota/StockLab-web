@@ -44,6 +44,6 @@
             Contacte al administrador         </div>
 
         <div class="message" style="padding: 10px;">
-            No se encuentra logueado para realizar esta accion            </div>
+            Ocurrio un error en el servidor            </div>
     </div>
 @endsection

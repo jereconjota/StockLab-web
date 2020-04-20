@@ -3,6 +3,11 @@
 @section('title','Actualizar Stock')
 
 @section('content')    
+
+    <div class="my-3" id="message">
+    </div>
+
+
     <div class="row my-2">
         <div class="col-md-3">
             <select name="sectors" id="select-sectores" class="browser-default custom-select">
@@ -21,9 +26,8 @@
 
     </div>
 
-    <div class="row table-responsive my-4">
+    <div class="table-responsive my-4">
         <table id="table-supplies" class="table table-bordered">
-            <caption>Lista de insumos de la categoria seleccionada</caption>
             <thead>
                 <tr class="table-info">
                     <th scope="col" data-sortable="true"> Nombre </th>
@@ -78,7 +82,6 @@
             </div>
         </div>
     </div>
-    
 
     @endsection
     
@@ -103,21 +106,29 @@
         $(document).ready(function(){
             $('#select-categories').on('change',function() {
                 chosenCategory = $(this).val()
-                $.get('table-supplies',{FK_Id_Categoria: chosenCategory},function(supplies) {
+                $.get('get-supplies',{FK_Id_Categoria: chosenCategory},function(supplies) {
+                    console.log(supplies)
                     $('#tbody-table-supplies').empty()
-                    $.each(supplies,function(index, value) {
-                    $('#table-supplies').append('<tr class="clickable-row"><td>' + 
-                        value.Nombre_Insumo + '</td><td>' + 
-                            value.Nro_Articulo + '</td><td>' + 
-                            value.NroLote + '</td><td>' +
-                            value.Stock_Actual + '</td><td>' +
-                            value.Stock_Actual + '</td><td>' +
-                            value.PDP + '</td><td>' +
-                            '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'+value.Id_Insumo+'" data-original-title="Edit" class="edit btn btn-primary btn-sm editInsumo">Decrementar</a>'+ '</td></tr>'   
-                            )
-
-                    })
-                })
+                        $.each(supplies,function(index, value) {
+                            if (value.Stock_Actual == '0') { 
+                                return true; //si el insumo no tiene stock, lo descarta
+                            }
+                            $('#table-supplies').append('<tr class="clickable-row"><td>' + 
+                                    value.Nombre_Insumo + '</td><td>' + 
+                                    value.Nro_Articulo + '</td><td>' + 
+                                    value.NroLote + '</td><td>' +
+                                    value.Stock_Actual + '</td><td>' +
+                                    value.Stock_Actual + '</td><td>' +
+                                    value.PDP + '</td><td>' +
+                                    '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'+value.Id_Insumo+'" data-original-title="Edit" class="edit btn btn-primary btn-sm editInsumo">Decrementar</a>'+ '</td></tr>'   
+                                    )
+        
+                            })  
+                }).fail(function() { //Capturamos el error 500 pero hay q ver como verga hacemos para q reconozca si devuelve null el query
+                    $('#message').html('<div class="alert alert-info alert-block">'+
+                                        '<button type="button" class="close" data-dismiss="alert">×</button>'+	
+                                        '<strong>No se encontraron insumos con stock asociados a la categoria \''+$('#select-categories').children("option:selected").text()+'\'</strong>')
+                    });
             })
         })
   
@@ -128,7 +139,7 @@
             }
         }); 
     var tablaInsumos;
-    $(document).ready(function() {
+    // $(document).ready(function() {
         tablaInsumos = $('#table-supplies').DataTable({
             "language": {
                 "info": "_TOTAL_ insumos",
@@ -151,7 +162,7 @@
                             "infoFiltered": ""
             }
         });
-    });   
+    // });   
     
     $('body').on('click', '.editInsumo', function () {
             var Id_Insumo = $(this).data('id');
@@ -178,21 +189,30 @@
                     'unidades': $('#unidades').val(),
                     'Id_Insumo': $('#Id_Insumo').val(),
                 },
+                statusCode: {
+                    500: function() {
+                        alert("Error en el servidor, por favor comuniquelo al administrador");
+                        console.log('500 ');
+                    }
+                },
                 success: function (data) {
                     console.log(data)
                     $('#formeditarinsumo').trigger("reset");
                     $('#editstocksupplie').modal('hide');
-                    $('#select-categories').trigger("change")   
-                   
+                    $('#select-categories').trigger("change")
+                    $('#message').html('<div class="alert alert-success alert-block">'+
+                                        '<button type="button" class="close" data-dismiss="alert">×</button>'+	
+                                        '<strong>'+data.insumo+' actualizado correctamente</strong>')   
                 },
                 error: function (data) {
                     console.log('Error: '+data);
-                
+                    $('#message').html('<div class="alert alert-danger alert-block">'+
+                                        '<button type="button" class="close" data-dismiss="alert">×</button>'+	
+                                        '<strong>Algo anduvo mal, por favor da aviso al administrador</strong>')
                 }
         });
         });   
     });
-
 
     </script>    
 @endsection
