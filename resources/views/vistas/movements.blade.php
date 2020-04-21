@@ -22,7 +22,7 @@
  
 <div class="row my-2">
     <div class="row table-responsive">
-        <table id="table-supplies" class="table table-bordered" data-sort-name="date" data-sort-order="desc">
+        <table id="table-movements" class="table table-bordered" data-sort-name="date" data-sort-order="desc">
             <caption>Movimientos sobre insumos</caption>
             <thead>
                 <tr class="table-info">
@@ -41,7 +41,6 @@
                 @endforeach
             </tbody>
         </table>
-        <span>{{$movements->links()}}</span>
     </div>
    
 </div>
@@ -49,5 +48,30 @@
 @endsection
 
 @section('script')
-
+<script type="text/javascript">
+var tablaMovimientos;
+    tablaMovimientos = $('#table-movements').DataTable({
+        "pagingType": "simple",
+            "language": {
+                "info": "_TOTAL_ movimientos",
+                            "search": "Buscar",
+                            "paginate": {
+                                "next": "Siguiente",
+                                "previous": "Anterior",
+                            },
+                            "lengthMenu": 'Mostrar <select>'+
+                                            '<option value="10">10</value>'+
+                                            '<option value="20">20</value>'+
+                                            '<option value="30">30</value>'+
+                                            '<option value="-1">Todos</value>'+
+                                            '</select> registros',
+                            "loadingRecords": "Cargando...",
+                            "processing": "Procesando...",
+                            "emptyTable": "No hay datos",
+                            "zeroRecords": "No hay concidencias",
+                            "infoEmpty": "",
+                            "infoFiltered": ""
+            }
+        });
+</script>
 @endsection

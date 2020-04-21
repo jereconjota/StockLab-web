@@ -17,7 +17,7 @@ class MovementsController extends Controller
         if (!empty($request->user())) {
             $request->user()->authorizeRoles(['admin']);
         }
-        $movements = Movimiento::paginate(10);
+        $movements = Movimiento::All()->sortBy('Fecha_Movimiento');
         return view('vistas.movements',compact('movements')); 
     }
 

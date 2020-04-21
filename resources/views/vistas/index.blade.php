@@ -139,7 +139,6 @@
             }
         }); 
     var tablaInsumos;
-    // $(document).ready(function() {
         tablaInsumos = $('#table-supplies').DataTable({
             "language": {
                 "info": "_TOTAL_ insumos",
@@ -162,7 +161,6 @@
                             "infoFiltered": ""
             }
         });
-    // });   
     
     $('body').on('click', '.editInsumo', function () {
             var Id_Insumo = $(this).data('id');
