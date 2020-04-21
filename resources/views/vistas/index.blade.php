@@ -107,13 +107,12 @@
             $('#select-categories').on('change',function() {
                 chosenCategory = $(this).val()
                 $.get('get-supplies',{FK_Id_Categoria: chosenCategory},function(supplies) {
-                    console.log(supplies)
                     $('#tbody-table-supplies').empty()
                         $.each(supplies,function(index, value) {
-                            if (value.Stock_Actual == '0') { 
-                                return true; //si el insumo no tiene stock, lo descarta
-                            }
-                            $('#table-supplies').append('<tr class="clickable-row"><td>' + 
+                            // if (value.Stock_Actual == '0') { 
+                            //     return true; //si el insumo no tiene stock, lo descarta (si trae insumos con stock 0)
+                            // }
+                            $('#tbody-table-supplies').append('<tr><td>' + 
                                     value.Nombre_Insumo + '</td><td>' + 
                                     value.Nro_Articulo + '</td><td>' + 
                                     value.NroLote + '</td><td>' +
@@ -122,12 +121,17 @@
                                     value.PDP + '</td><td>' +
                                     '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'+value.Id_Insumo+'" data-original-title="Edit" class="edit btn btn-primary btn-sm editInsumo">Decrementar</a>'+ '</td></tr>'   
                                     )
-        
                             })  
-                }).fail(function() { //Capturamos el error 500 pero hay q ver como verga hacemos para q reconozca si devuelve null el query
+                }).fail(function() { //Capturamos el error 500 pero hay q ver como verga hacemos 
+                                    //para q reconozca si devuelve null el query
+                    $('#tbody-table-supplies').empty()
+                    $('#tbody-table-supplies').append('<tr class="odd"><td valign="top" colspan="7" class="dataTables_empty">No hay datos</td></tr>')
+                    if (!($('#select-categories').children("option:selected").text()== 'CATEGORIA')) {
                     $('#message').html('<div class="alert alert-info alert-block">'+
                                         '<button type="button" class="close" data-dismiss="alert">×</button>'+	
-                                        '<strong>No se encontraron insumos con stock asociados a la categoria \''+$('#select-categories').children("option:selected").text()+'\'</strong>')
+                                        '<strong>No se encontraron insumos con stock asociados a la categoria \''+$('#select-categories').children("option:selected").text()+'\'</strong>')   
+                    }
+                    //cuando trae null da error, pero cuando todos los insumos de una categoria tienen 0 solo queda la tabla vacia
                     });
             })
         })
@@ -140,6 +144,7 @@
         }); 
     var tablaInsumos;
         tablaInsumos = $('#table-supplies').DataTable({
+            "ServerSide": true,
             "language": {
                 "info": "_TOTAL_ insumos",
                             "search": "Buscar",
@@ -162,24 +167,23 @@
             }
         });
     
-    $('body').on('click', '.editInsumo', function () {
-            var Id_Insumo = $(this).data('id');
-            $.get("{{ route('stock.index') }}" +'/' + Id_Insumo +'/edit', function (data) {
-                $('#editBtn').val("edit-book");
-                $('#modelHeading').html(data.Nombre_Insumo);
-                $('#editstocksupplie').modal('show');
-                $('#nrolote').text(data.NroLote);
-                $('#nroarticulo').text(data.Nro_Articulo);
-                $('#pdp').text(data.PDP);
-                $('#ultimafechadeuso').text(data.Fecha_Uso);
-                $('#stockactual').text(data.Stock_Actual);
-                $('#Id_Insumo').val(data.Id_Insumo);
-        })
-    })  
+        $('body').on('click', '.editInsumo', function () {
+                var Id_Insumo = $(this).data('id');
+                $.get("{{ route('stock.index') }}" +'/' + Id_Insumo +'/edit', function (data) {
+                    $('#editBtn').val("edit-book");
+                    $('#modelHeading').html(data.Nombre_Insumo);
+                    $('#editstocksupplie').modal('show');
+                    $('#nrolote').text(data.NroLote);
+                    $('#nroarticulo').text(data.Nro_Articulo);
+                    $('#pdp').text(data.PDP);
+                    $('#ultimafechadeuso').text(data.Fecha_Uso);
+                    $('#stockactual').text(data.Stock_Actual);
+                    $('#Id_Insumo').val(data.Id_Insumo);
+            })
+        })  
  
         $('#editBtn').click(function (e) {
             e.preventDefault();
-            $(this).html('Save');
             $.ajax({
                 type: "POST",
                 url: "editStock",
@@ -189,24 +193,31 @@
                 },
                 statusCode: {
                     500: function() {
-                        alert("Error en el servidor, por favor comuniquelo al administrador");
-                        console.log('500 ');
+                        $('#formeditarinsumo').trigger("reset");
+                        $('#editstocksupplie').modal('hide');
+                        $('#message').html('<div class="alert alert-danger alert-block">'+
+                                        '<button type="button" class="close" data-dismiss="alert">×</button>'+	
+                                        '<strong>Algo anduvo mal, por favor da aviso al administrador</strong>')
+                    },
+                    400: function() {
+                        $('#formeditarinsumo').trigger("reset");
+                        $('#editstocksupplie').modal('hide');
+                        $('#message').html('<div class="alert alert-danger alert-block">'+
+                                        '<button type="button" class="close" data-dismiss="alert">×</button>'+	
+                                        '<strong>No puedes decrementar mas unidades del stock restante</strong>')
                     }
                 },
                 success: function (data) {
-                    console.log(data)
+                    // console.log(data)
                     $('#formeditarinsumo').trigger("reset");
                     $('#editstocksupplie').modal('hide');
                     $('#select-categories').trigger("change")
                     $('#message').html('<div class="alert alert-success alert-block">'+
                                         '<button type="button" class="close" data-dismiss="alert">×</button>'+	
-                                        '<strong>'+data.insumo+' actualizado correctamente</strong>')   
+                                        '<strong>'+data.insumo+' (Lote Nro: '+data.nroLote+') actualizado correctamente</strong>')   
                 },
                 error: function (data) {
-                    console.log('Error: '+data);
-                    $('#message').html('<div class="alert alert-danger alert-block">'+
-                                        '<button type="button" class="close" data-dismiss="alert">×</button>'+	
-                                        '<strong>Algo anduvo mal, por favor da aviso al administrador</strong>')
+                    console.log('Error: '+data.error);
                 }
         });
         });   

@@ -68,6 +68,17 @@
             <div class="title m-b-md">
                 StockLab
                 {{-- <img src="img/iconoStockLab.png" alt=""> --}}
+                @if ($ip === "201.190.238.88")
+                    <h4>Sede Km3</h4>
+                @else
+                    @if ($ip === "168.228.143.124")
+                    <h4>Sede Rada Tilly</h4>                        
+                        @else
+                            @if ($ip === "192.168.10.241")
+                            <h4>Sede Rada Tilly</h4> 
+                            @endif
+                    @endif
+                @endif
                 <h4>{{$ip}}</h4>
             </div>
 

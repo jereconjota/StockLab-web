@@ -60,12 +60,14 @@ class InsumoController extends Controller
         // return response()->json(['success'=>'Stock actualizado correctamente']);
         $supplie = Insumo::find($request->Id_Insumo);
         $nombreInsumo = $supplie->Nombre_Insumo;
+        $nroLote = $supplie->NroLote;
         $supplie->Stock_Actual = $supplie->Stock_Actual - $request->unidades;
-        $supplie->save();
-        // return response()->json(['success'=>'anduvo']);
-        return response()->json(['success' => 'Valar morghuilis', 'insumo' => $nombreInsumo],200);
-        // return back()->with('success','Item created successfully!');
-
+        if ($supplie->Stock_Actual >= 0) {
+            $supplie->save();
+            return response()->json(['success' => 'Valar morghuilis', 'insumo' => $nombreInsumo, 'nroLote' => $nroLote],200);
+        }else {
+            return response()->json(['error' => 'drakaris'],400);
+        }
     }
 
     /**
@@ -79,10 +81,8 @@ class InsumoController extends Controller
     {
         $supplie = Insumo::find($id);
         $supplie->Stock_Actual = $supplie->Stock_Actual - $request->unidades;
-        // $supplie->Stock_Actual = $supplie->Stock_Actual - $request->get('unidades');
         $supplie->save();
         return redirect()->route('stock.index')->with('success','Item created successfully!');
-
     }
 
 
@@ -98,13 +98,15 @@ class InsumoController extends Controller
         }
     }
     public function getSupplies(Request $request){
-        // if ($request->ajax()) {
-            $supplies = Insumo::where([['FK_Id_Categoria', $request->FK_Id_Categoria],['Estado_Insumo', 'Activo']/*,['Stock_Actual','>', 0]*/])->get();
+        if ($request->ajax()) {
+            $supplies = Insumo::where([['FK_Id_Categoria', $request->FK_Id_Categoria],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0]])->get();
+            if ($supplies !== null) {
                 foreach ($supplies as $sup) {
                     $arraysupplies[$sup->Id_Insumo] = $sup;
                 }
                 return response()->json($arraysupplies);
-        // }
+            }   
+        }
     }
 
 
