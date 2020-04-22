@@ -37,5 +37,11 @@ Route::get('insumos', function(){
         ->toJson();
 });
 
+Route::get('insumosenpdp', function(){
+    $query = Insumo::where([/*['FK_Id_Categoria', $request->FK_Id_Categoria],*/['Estado_Insumo', 'Activo'],['Stock_Actual','<=', 'PDP']])->get();
+    return datatables($query)
+        ->toJson();
+});
+
 
 
