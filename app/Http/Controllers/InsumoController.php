@@ -110,4 +110,5 @@ class InsumoController extends Controller
     }
 
 
+
 }

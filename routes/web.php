@@ -36,6 +36,7 @@ Route::get('/dt', function () {
 
 //CONTROLADOR INSUMOS
 Route::resource('stock','InsumoController');
+
 Route::get('/categoria','InsumoController@getCategorias');
 Route::get('/get-supplies','InsumoController@getSupplies');
 

@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
-
+use StockLab\Insumo;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,7 +17,7 @@ use Illuminate\Http\Request;
 //     return $request->user();
 // });
 
-Route::get('insumos', function(){
+Route::get('insumosdt', function(){
     // return StockLab\Insumo::all();
     return datatables()
         ->eloquent(StockLab\Insumo::query())
@@ -25,3 +25,17 @@ Route::get('insumos', function(){
         ->rawColumns(['btn'])
         ->toJson();
 });
+
+Route::get('insumos', function(){
+    $query = Insumo::where([/*['FK_Id_Categoria', $request->FK_Id_Categoria],*/['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0]])->get();
+    return datatables($query)
+        ->addColumn('action', function($row){
+            $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->Id_Insumo.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editInsumo">Decrementar</a>';
+            return $btn;
+        })
+        ->rawColumns(['action'])
+        ->toJson();
+});
+
+
+

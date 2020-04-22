@@ -66,7 +66,7 @@
         $(document).ready(function() {
             $('#tablainsumos').DataTable({
                 "ServerSide": true,
-                "ajax": "{{ url('api/insumos') }}",
+                "ajax": "{{ url('api/insumosdt') }}",
                 "columns": [
                     {data: 'Nombre_Insumo'},
                     {data: 'Nro_Articulo'},
