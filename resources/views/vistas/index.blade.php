@@ -35,8 +35,8 @@
                     <th scope="col"> Nro. de Lote </th>
                     <th scope="col"> Actual </th>
                     <th scope="col"> PDP </th>
-                    {{-- <th scope="col"> Decrementar </th> --}}
-                    <th scope="col">&nbsp;</th>
+                    <th scope="col"> Decrementar </th>
+                    <!-- <th scope="col">&nbsp;</th> -->
                 </tr>
             </thead>
             
@@ -180,7 +180,27 @@
                 "zeroRecords": "No hay concidencias",
                 "infoEmpty": "",
                 "infoFiltered": ""
-            }
+            },
+            "initComplete": function () {
+            this.api().columns().every( function () {
+                var column = this;
+                var select = $('<select><option value=""></option></select>')
+                    .appendTo( $(column.footer()).empty() )
+                    .on( 'change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
+                            $(this).val()
+                        );
+ 
+                        column
+                            .search( val ? '^'+val+'$' : '', true, false )
+                            .draw();
+                    } );
+ 
+                column.data().unique().sort().each( function ( d, j ) {
+                    select.append( '<option value="'+d+'">'+d+'</option>' )
+                } );
+            } );
+        }
         });
     
         $('body').on('click', '.editInsumo', function () {
