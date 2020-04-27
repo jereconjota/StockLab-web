@@ -36,7 +36,6 @@
                     <th scope="col"> Actual </th>
                     <th scope="col"> PDP </th>
                     <th scope="col"> Decrementar </th>
-                    <!-- <th scope="col">&nbsp;</th> -->
                 </tr>
             </thead>
             
@@ -61,7 +60,6 @@
                             Nro de lote<h3 id="nrolote"></h3>
                             Nro de articulo<h3 id="nroarticulo"></h3>
                             PDP<h3 id="pdp"></h3>
-                            {{-- Ultima fecha de uso:<h5 id="ultimafechadeuso"></h5> --}}
                             <h3>STOCK ACTUAL</h3> <h3 id="stockactual"></h3>
                         </div>
                         <form id="formeditarinsumo" name="formeditarinsumo" class="form-horizontal">
@@ -103,37 +101,6 @@
             });
         });
         let chosenCategory
-        // $(document).ready(function(){
-        //     $('#select-categories').on('change',function() {
-        //         chosenCategory = $(this).val()
-        //         $.get('get-supplies',{FK_Id_Categoria: chosenCategory},function(supplies) {
-        //             $('#tbody-table-supplies').empty()
-        //                 $.each(supplies,function(index, value) {
-        //                     // if (value.Stock_Actual == '0') { 
-        //                     //     return true; //si el insumo no tiene stock, lo descarta (si trae insumos con stock 0)
-        //                     // }
-        //                     $('#tbody-table-supplies').append('<tr><td>' + 
-        //                             value.Nombre_Insumo + '</td><td>' + 
-        //                             value.Nro_Articulo + '</td><td>' + 
-        //                             value.NroLote + '</td><td>' +
-        //                             value.Stock_Actual + '</td><td>' +
-        //                             value.PDP + '</td><td>' +
-        //                             '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'+value.Id_Insumo+'" data-original-title="Edit" class="edit btn btn-primary btn-sm editInsumo">Decrementar</a>'+ '</td></tr>'   
-        //                             )
-        //                     })  
-        //         }).fail(function() { //Capturamos el error 500 pero hay q ver como verga hacemos 
-        //                             //para q reconozca si devuelve null el query
-        //             $('#tbody-table-supplies').empty()
-        //             $('#tbody-table-supplies').append('<tr class="odd"><td valign="top" colspan="7" class="dataTables_empty">No hay datos</td></tr>')
-        //             if (!($('#select-categories').children("option:selected").text()== 'CATEGORIA')) {
-        //             $('#message').html('<div class="alert alert-info alert-block">'+
-        //                                 '<button type="button" class="close" data-dismiss="alert">×</button>'+	
-        //                                 '<strong>No se encontraron insumos con stock asociados a la categoria \''+$('#select-categories').children("option:selected").text()+'\'</strong>')   
-        //             }
-        //             //cuando trae null da error, pero cuando todos los insumos de una categoria tienen 0 solo queda la tabla vacia
-        //             });
-        //     })
-        // })
   
     $(function () {
         $.ajaxSetup({
@@ -155,12 +122,6 @@
                     {data: 'action', name: 'action', orderable: false, searchable: false},
                 ],
             "pagingType": "simple",
-            // "dom": 'Bfrtip',
-            // "buttons": [ {
-            //     "extend": 'excelHtml5',
-            //     "autoFilter": true,
-            //     "sheetName": 'Exported data'
-            // } ],
             "language": {
                 "info": "_TOTAL_ insumos",
                 "search": "Buscar",
@@ -212,7 +173,6 @@
                     $('#nrolote').text(data.NroLote);
                     $('#nroarticulo').text(data.Nro_Articulo);
                     $('#pdp').text(data.PDP);
-                    // $('#ultimafechadeuso').text(data.Fecha_Uso);
                     $('#stockactual').text(data.Stock_Actual);
                     $('#Id_Insumo').val(data.Id_Insumo);
             })

@@ -39,10 +39,6 @@ class InsumoController extends Controller
      */
     public function edit($id)
     {
-        // if (!empty($request->user())) {
-        //     $request->user()->authorizeRoles(['admin']);
-        // }
-
         $supplie = Insumo::find($id);        
         return response()->json($supplie);
     }
@@ -55,9 +51,6 @@ class InsumoController extends Controller
      */
     public function store(Request $request)
     {
-        // Insumo::updateOrCreate(['Id_Insumo' => $request->Id_Insumo],
-        //         [ 'Stock_Actual' => $request->Stock_Actual - $request->unidades]);
-        // return response()->json(['success'=>'Stock actualizado correctamente']);
         $supplie = Insumo::find($request->Id_Insumo);
         $nombreInsumo = $supplie->Nombre_Insumo;
         $nroLote = $supplie->NroLote;
