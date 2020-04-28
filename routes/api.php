@@ -28,7 +28,10 @@ Route::get('insumosdt', function(){
 
 //Carga la tabla en Actualizar Stock
 Route::get('insumos', function(){
-
+    //////////////////////////////////////////////////////////////////////////////////////
+    // HAY Q CAMBIAR PARA Q LA LOGICA LA MANEJE EL CONTROLADOR Y SOLO QUEDE EN LA RUTA //
+    ////////////////////////////////////////////////////////////////////////////////////
+    
     $ip = \Request::ip();
     $sucursal=0;
     switch ($ip) {

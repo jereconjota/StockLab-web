@@ -7,20 +7,17 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 //CONTROLADOR INSUMOS
-Route::resource('stock','InsumoController');
+Route::resource('stock','InsumoController')->middleware('auth');
+Route::get('pdp', 'InsumoController@getPdp')->middleware('auth');
 
 Route::get('/categoria','InsumoController@getCategorias');
 Route::get('/get-supplies','InsumoController@getSupplies');
-
 Route::post('editStock','InsumoController@store');
 //FIN CONTROLADOR INSUMOS
 
 
 //CONTROLADOR MOVIMIENTOS
-Route::resource('movimientos','MovementsController');
-
-//CONTROLADOR PDP
-Route::get('pdp', 'InsumoController@getPdp');
+Route::resource('movimientos','MovementsController')->middleware('auth');;
 
 //AUTENTICACION
 Auth::routes();
