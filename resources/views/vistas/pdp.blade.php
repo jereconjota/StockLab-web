@@ -49,12 +49,8 @@
                     {data: 'PDP'},
                 ],
             "pagingType": "simple",
-            "dom": 'Bfrtip',
-            "buttons": [ {
-                "extend": 'excelHtml5',
-                "autoFilter": true,
-                "sheetName": 'Exported data'
-            } ],
+            // "dom": 'Bfrtip',
+            // "buttons": [ 'excel', 'pdf' ],
             "language": {
                 "info": "_TOTAL_ insumos",
                 "search": "Buscar",
@@ -76,7 +72,7 @@
                 "infoFiltered": ""
             }
         });
-    
+            
  
     });
 

@@ -17,19 +17,32 @@ class InsumoController extends Controller
     public function index(Request $request)
     {
         if (!empty($request->user())) {
-            $request->user()->authorizeRoles(['admin']);
+            $request->user()->authorizeRoles(['admin', 'user']);
         }
         $ip = $request->ip();
-        // if ($ip === "201.190.238.88" || $ip === "168.228.143.124") {        
-        //     $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','!=','Administracion']])->get();
-        //     return view('vistas.index',compact('sector','ip'));
-        // }else{
-        //     return view('errors.ipincorrecta');
-        // }
-        $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','!=','Administracion']])->get();
-        return view('vistas.index',compact('sector','ip'));
+        if ($ip === "201.190.238.88" || $ip === "168.228.143.124" || $ip === "192.168.10.241" || $ip === "127.0.0.1") {        
+            $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','=','Extraccion']])
+            ->orWhere('Nombre_Sector','=','Almacen')
+            ->orWhere('Nombre_Sector','=','Proteinograma')->get();
+            return view('vistas.index',compact('sector','ip'));
+        }else{
+            return view('errors.ipincorrecta');
+        }
     }
-
+    
+    public function getPdp(Request $request)
+    {
+        if (!empty($request->user())) {
+            $request->user()->authorizeRoles(['admin', 'user']);
+        }
+        $ip = $request->ip();
+        if ($ip === "201.190.238.88" || $ip === "168.228.143.124" || $ip === "192.168.10.241" || $ip === "127.0.0.1") {        
+            $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','!=','Administracion']])->get();
+            return view('vistas.pdp',compact('sector','ip'));
+        }else{
+            return view('errors.ipincorrecta');
+        }
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -101,7 +114,5 @@ class InsumoController extends Controller
             }   
         }
     }
-
-
 
 }

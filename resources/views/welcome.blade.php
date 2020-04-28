@@ -68,7 +68,28 @@
             <div class="title m-b-md">
                 StockLab
                 {{-- <img src="img/iconoStockLab.png" alt=""> --}}
-                @if ($ip === "201.190.238.88")
+                @switch($ip)
+                    @case("201.190.238.88")
+                        <h4>Sede Km3</h4>
+                        @break
+
+                    @case("168.228.143.124")
+                        <h4>Sede Rada Tilly</h4>
+                        @break
+
+                    @case("192.168.10.241")
+                        <h4>Sede Central</h4>
+                        @break
+
+                    @case("127.0.0.1")
+                        <h4>Testing</h4>
+                        @break
+
+                    @default
+                        <h4>{{$ip}}</h4>
+                @endswitch
+               
+                 {{-- @if ($ip === "201.190.238.88")
                     <h4>Sede Km3</h4>
                 @else
                     @if ($ip === "168.228.143.124")
@@ -78,8 +99,8 @@
                             <h4>Sede Rada Tilly</h4> 
                             @endif
                     @endif
-                @endif
-                <h4>{{$ip}}</h4>
+                @endif  --}}
+
             </div>
 
             <div class="links">

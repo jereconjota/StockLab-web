@@ -13,7 +13,7 @@
             <select name="sectors" id="select-sectores" class="browser-default custom-select">
                 <option selected>SECTOR</option>
                 @foreach ($sector as $sec)
-                    <option value="{{ $sec->Id_Sector }}">{{ $sec->Nombre_Sector }}</option>
+                        <option value="{{ $sec->Id_Sector }}">{{ $sec->Nombre_Sector }}</option>                        
                 @endforeach
             </select>
         </div>

@@ -20,7 +20,7 @@ Route::post('editStock','InsumoController@store');
 Route::resource('movimientos','MovementsController');
 
 //CONTROLADOR PDP
-Route::resource('pdp', 'PdpController');
+Route::get('pdp', 'InsumoController@getPdp');
 
 //AUTENTICACION
 Auth::routes();
