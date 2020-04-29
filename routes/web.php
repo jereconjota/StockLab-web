@@ -43,4 +43,6 @@ Route::get('/dt', function () {
     $categoria= StockLab\Categoria::all();
     return view('ejemplodatatable/datatable', compact('sector','categoria'));
 });
+Route::get('/ip','InsumoController@ip');
+
 //Fin pruebas

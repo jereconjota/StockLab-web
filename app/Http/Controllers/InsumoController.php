@@ -20,12 +20,25 @@ class InsumoController extends Controller
             $request->user()->authorizeRoles(['admin', 'user']);
         }
         $ip = $request->ip();
-        if ($ip === "201.190.238.88" || $ip === "168.228.143.124" || $ip === "192.168.10.241" || $ip === "127.0.0.1") {        
-            $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','=','Extraccion']])
-            ->orWhere('Nombre_Sector','=','Almacen')
-            ->orWhere('Nombre_Sector','=','Proteinograma')->get();
-            return view('vistas.index',compact('sector','ip'));
-        }else{
+        $ip = "192.168.10.242";
+        switch ($ip) {
+            case "127.0.0.1":
+            case "192.168.10.241":
+                $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','!=','Administracion']])->get();
+                return view('vistas.index',compact('sector','ip'));    
+            break;
+            case "201.190.238.88":
+                $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','=','Extraccion']])
+                    ->orWhere('Nombre_Sector','=','Almacen')
+                    ->orWhere('Nombre_Sector','=','Hematologia')->get();
+                return view('vistas.index',compact('sector','ip'));
+                break;
+            case "168.168.12.101":
+                $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','=','Extraccion']])
+                    ->orWhere('Nombre_Sector','=','Almacen')->get();
+                return view('vistas.index',compact('sector','ip'));
+                break;
+            default:
             return view('errors.ipincorrecta');
         }
     }
@@ -36,10 +49,25 @@ class InsumoController extends Controller
             $request->user()->authorizeRoles(['admin', 'user']);
         }
         $ip = $request->ip();
-        if ($ip === "201.190.238.88" || $ip === "168.228.143.124" || $ip === "192.168.10.241" || $ip === "127.0.0.1") {        
-            $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','!=','Administracion']])->get();
-            return view('vistas.pdp',compact('sector','ip'));
-        }else{
+        // $ip = "192.168.10.242";
+        switch ($ip) {
+            case "127.0.0.1":
+            case "192.168.10.241":
+                $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','!=','Administracion']])->get();
+                return view('vistas.index',compact('sector','ip'));    
+            break;
+            case "201.190.238.88":
+                $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','=','Extraccion']])
+                    ->orWhere('Nombre_Sector','=','Almacen')
+                    ->orWhere('Nombre_Sector','=','Hematologia')->get();
+                return view('vistas.index',compact('sector','ip'));
+                break;
+            case "168.168.12.101":
+                $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','=','Extraccion']])
+                    ->orWhere('Nombre_Sector','=','Almacen')->get();
+                return view('vistas.index',compact('sector','ip'));
+                break;
+            default:
             return view('errors.ipincorrecta');
         }
     }
@@ -103,16 +131,74 @@ class InsumoController extends Controller
             }   
         }
     }
-    public function getSupplies(Request $request){
-        if ($request->ajax()) {
-            $supplies = Insumo::where([['FK_Id_Categoria', $request->FK_Id_Categoria],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0]])->get();
-            if ($supplies !== null) {
-                foreach ($supplies as $sup) {
-                    $arraysupplies[$sup->Id_Insumo] = $sup;
-                }
-                return response()->json($arraysupplies);
-            }   
-        }
+    // public function getSupplies(Request $request){
+    //     if ($request->ajax()) {
+    //         $supplies = Insumo::where([['FK_Id_Categoria', $request->FK_Id_Categoria],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0]])->get();
+    //         if ($supplies !== null) {
+    //             foreach ($supplies as $sup) {
+    //                 $arraysupplies[$sup->Id_Insumo] = $sup;
+    //             }
+    //             return response()->json($arraysupplies);
+    //         }   
+    //     }
+    // }
+
+
+    public function apiGetInsumos(){
+    $ip = \Request::ip();
+ 
+    switch ($ip) {
+        case "192.168.10.241":
+            $sucursal = 1;
+            break;
+        case "201.190.238.88":
+            $sucursal = 2;
+            break;
+        case "168.168.12.101":
+            $sucursal = 3;
+            break;
+        case "127.0.0.1":
+            $sucursal = 1;
+            break;
+        default:
+            $sucursal = 0;
+    }
+    
+    if ($sucursal == 0) {
+        $query = Insumo::where([['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0]])->get();
+    }elseif ($sucursal == 1) {
+        $query = Insumo::where([['Fk_Id_Sucursal','=', $sucursal],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0],])->get();
+        }else {
+            $query = Insumo::where([['Fk_Id_Sucursal','=', $sucursal],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0],['Fk_Id_Categoria','=','33']])
+                ->orWhere([['Fk_Id_Sucursal','=', $sucursal],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0],['Fk_Id_Categoria','=','34']])
+                ->orWhere([['Fk_Id_Sucursal','=', $sucursal],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0],['Fk_Id_Categoria','=','35']])
+                ->orWhere([['Fk_Id_Sucursal','=', $sucursal],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0],['Fk_Id_Categoria','=','35']])
+                ->orWhere([['Fk_Id_Sucursal','=', $sucursal],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0],['Fk_Id_Categoria','=','37']])
+                ->orWhere([['Fk_Id_Sucursal','=', $sucursal],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0],['Fk_Id_Categoria','=','38']])
+                ->orWhere([['Fk_Id_Sucursal','=', $sucursal],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0],['Fk_Id_Categoria','=','26']])
+                ->orWhere([['Fk_Id_Sucursal','=', $sucursal],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0],['Fk_Id_Categoria','=','27']])
+                ->orWhere([['Fk_Id_Sucursal','=', $sucursal],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0],['Fk_Id_Categoria','=','28']])->get();
+        }    
+        
+    
+
+
+    return datatables($query)
+        ->addColumn('action', function($row){
+            $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->Id_Insumo.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editInsumo">Decrementar</a>';
+            return $btn;
+        })
+        ->rawColumns(['action'])
+        // ->make(true);
+        ->toJson();
     }
 
+    public function ip(){
+        // $ip = Request::ip();
+        $ip2 = \Request::ip();
+        $ip3 = request()->ip();
+        $ip4 = \Request::getClientIp(true);
+        var_dump($ip2, $ip3, $ip4);
+        return 'ip';
+    }
 }

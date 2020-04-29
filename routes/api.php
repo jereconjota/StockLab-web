@@ -27,53 +27,51 @@ Route::get('insumosdt', function(){
 });
 
 //Carga la tabla en Actualizar Stock
-Route::get('insumos', function(){
-    //////////////////////////////////////////////////////////////////////////////////////
-    // HAY Q CAMBIAR PARA Q LA LOGICA LA MANEJE EL CONTROLADOR Y SOLO QUEDE EN LA RUTA //
-    ////////////////////////////////////////////////////////////////////////////////////
+Route::get('insumos','InsumoController@apiGetInsumos');
+
+// Route::get('insumos', function(){
+//     $ip = \Request::ip();
+//     $sucursal=0;
+//     switch ($ip) {
+//         case "192.168.10.241":
+//             $sucursal = 1;
+//             break;
+//         case "201.190.238.88":
+//             $sucursal = 2;
+//             break;
+//         case "168.228.143.124":
+//             $sucursal = 3;
+//             break;
+//         case "127.0.0.1":
+//             $sucursal = 0;
+//             break;
+//         default:
+//             $sucursal = 0;
+//     }
+
+//     if ($sucursal == 0) {
+//         $query = Insumo::where([['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0]])->get();
+//     } else {
+//         $query = Insumo::where([['Fk_Id_Sucursal','=', $sucursal],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0],['Fk_Id_Categoria','=','33']])
+//             ->orWhere([['Fk_Id_Sucursal','=', $sucursal],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0],['Fk_Id_Categoria','=','34']])
+//             ->orWhere([['Fk_Id_Sucursal','=', $sucursal],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0],['Fk_Id_Categoria','=','35']])
+//             ->orWhere([['Fk_Id_Sucursal','=', $sucursal],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0],['Fk_Id_Categoria','=','35']])
+//             ->orWhere([['Fk_Id_Sucursal','=', $sucursal],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0],['Fk_Id_Categoria','=','37']])
+//             ->orWhere([['Fk_Id_Sucursal','=', $sucursal],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0],['Fk_Id_Categoria','=','38']])
+//             ->orWhere([['Fk_Id_Sucursal','=', $sucursal],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0],['Fk_Id_Categoria','=','26']])
+//             ->orWhere([['Fk_Id_Sucursal','=', $sucursal],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0],['Fk_Id_Categoria','=','27']])
+//             ->orWhere([['Fk_Id_Sucursal','=', $sucursal],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0],['Fk_Id_Categoria','=','28']])->get();
+//     }
     
-    $ip = \Request::ip();
-    $sucursal=0;
-    switch ($ip) {
-        case "192.168.10.241":
-            $sucursal = 1;
-            break;
-        case "201.190.238.88":
-            $sucursal = 2;
-            break;
-        case "168.228.143.124":
-            $sucursal = 3;
-            break;
-        case "127.0.0.1":
-            $sucursal = 1;
-            break;
-        default:
-            $sucursal = 0;
-    }
 
-    // if ($sucursal = 0) {
-    //     # code...
-    // } else {
-    //     # code...
-    // }
-    
-    $query = Insumo::where([['Fk_Id_Sucursal','=', $sucursal],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0],['Fk_Id_Categoria','=','33']])
-        ->orWhere([['Fk_Id_Sucursal','=', $sucursal],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0],['Fk_Id_Categoria','=','34']])
-        ->orWhere([['Fk_Id_Sucursal','=', $sucursal],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0],['Fk_Id_Categoria','=','35']])
-        ->orWhere([['Fk_Id_Sucursal','=', $sucursal],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0],['Fk_Id_Categoria','=','35']])
-        ->orWhere([['Fk_Id_Sucursal','=', $sucursal],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0],['Fk_Id_Categoria','=','37']])
-        ->orWhere([['Fk_Id_Sucursal','=', $sucursal],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0],['Fk_Id_Categoria','=','38']])
-        ->orWhere([['Fk_Id_Sucursal','=', $sucursal],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0],['Fk_Id_Categoria','=','44']])->get();
-
-
-    return datatables($query)
-        ->addColumn('action', function($row){
-            $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->Id_Insumo.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editInsumo">Decrementar</a>';
-            return $btn;
-        })
-        ->rawColumns(['action'])
-        ->toJson();
-});
+//     return datatables($query)
+//         ->addColumn('action', function($row){
+//             $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->Id_Insumo.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editInsumo">Decrementar</a>';
+//             return $btn;
+//         })
+//         ->rawColumns(['action'])
+//         ->toJson();
+// });
 
 
 
