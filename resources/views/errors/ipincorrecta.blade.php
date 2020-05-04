@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title','Acceso denegado')
 @section('styles')
 <style>
     html, body {

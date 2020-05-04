@@ -13,42 +13,44 @@
                 <tr class="table-info">
                     <th scope="col" data-sortable="true"> Nombre </th>
                     <th scope="col"> Nro. Articulo </th>
-                    <th scope="col"> Stock General </th>
+                    <th scope="col"> Nro. de Lote </th>
+                    <th scope="col"> Actual </th>
                     <th scope="col"> PDP </th>
                 </tr>
             </thead>
             
             <tbody id="tbody-table-supplies">
-                {{-- @foreach ($pornombre as $item => $is)
-                    <tr>
-                        <td>{{$item}}</td>
-                        @foreach ($is as $i)
-                            <td>{{$i->Nro_Articulo}}</td>
-                            <td>{{$i->Stock_Actual}}</td>
-                            <td>{{$i->PDP}}</td>
-                            @break
-                        @endforeach
-                    </tr>
-                @endforeach --}}
-                @foreach ($pdps as $item)
-                    <tr>
-                        <td>{{$item->Nombre_Insumo}}</td>
-                        <td>{{$item->Nro_Articulo}}</td>
-                        <td>{{$item->Stock_Real}}</td>
-                        <td>{{$item->PDP}}</td>
-                    </tr>
-                @endforeach
+
             </tbody>
         </table>
     </div>
 
-@endsection
+    @endsection
     
-@section('script')
-<script type="text/javascript">
-
+    @section('script')
+    <script type="text/javascript">
+        
+    $(function () {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        }); 
         var tablaInsumos;
         tablaInsumos = $('#table-supplies').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "ajax": "{{ url('api/insumosenpdp') }}",
+            "columns": [
+                    {data: 'Nombre_Insumo'},
+                    {data: 'Nro_Articulo'},
+                    {data: 'NroLote'},
+                    {data: 'Stock_Actual'},
+                    {data: 'PDP'},
+                ],
+            "pagingType": "simple",
+            // "dom": 'Bfrtip',
+            // "buttons": [ 'excel', 'pdf' ],
             "language": {
                 "info": "_TOTAL_ insumos",
                 "search": "Buscar",
@@ -70,5 +72,9 @@
                 "infoFiltered": ""
             }
         });
+            
+ 
+    });
+
     </script>    
 @endsection

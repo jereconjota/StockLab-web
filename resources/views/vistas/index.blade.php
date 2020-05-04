@@ -108,8 +108,7 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         }); 
-    var tablaInsumos;
-        tablaInsumos = $('#table-supplies').DataTable({
+    var tablaInsumos = $('#table-supplies').DataTable({
             "processing": true,
             "serverSide": true,
             "ajax": "{{ url('api/insumos') }}",
@@ -143,7 +142,14 @@
                 "infoFiltered": ""
             }
         });
-    
+
+        $('#select-categories').on('change',function() {
+            chosenCategory = $(this).val()
+            console.log(chosenCategory)
+            // tablaInsumos.fnFilter('ABON')
+            tablaInsumos.draw();
+        })
+        
         $('body').on('click', '.editInsumo', function () {
                 var Id_Insumo = $(this).data('id');
                 $.get("{{ route('stock.index') }}" +'/' + Id_Insumo +'/edit', function (data) {

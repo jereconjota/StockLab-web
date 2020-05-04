@@ -8,7 +8,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 //CONTROLADOR INSUMOS
 Route::resource('stock','InsumoController')->middleware('auth');
-Route::get('pdp', 'InsumoController@getPdp')->middleware('auth');
+// Route::get('pdp', 'InsumoController@getPdp')->middleware('auth');
+Route::get('pdp', 'InsumoController@pdp')->middleware('auth');
+
 
 Route::get('/categoria','InsumoController@getCategorias');
 Route::get('/get-supplies','InsumoController@getSupplies');
