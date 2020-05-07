@@ -197,7 +197,7 @@ class InsumoController extends Controller
     public function pdp(){
         $ins=Insumo::where([['Estado_Insumo', 'Activo'],['Fk_Id_Sucursal', 2]])->get()->groupBy('Nombre_Insumo');
         $pdps= collect([]);
-
+        $ip = \Request::ip();
         foreach ($ins as $key => $value) {
             $stockgeneral=0;
             $insumo;
@@ -210,7 +210,7 @@ class InsumoController extends Controller
                 $pdps->push($insumo);
             }
         }
-        return view('vistas.pdp',compact('pdps'));
+        return view('vistas.pdp',compact('pdps','ip'));
     }
 
     public function ip(){

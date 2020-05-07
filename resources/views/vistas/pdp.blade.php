@@ -46,9 +46,31 @@
     
 @section('script')
 <script type="text/javascript">
-
+        var sucursal
+        // $.getJSON('http://ip.jsontest.com/?callback=?', function(data) {
+        //     console.log(data.ip)
+        // });
+        switch ('{{$ip}}') {
+            case '201.190.238.88':
+                sucursal = ' - km3'
+                break;
+            case '127.0.0.1':
+                sucursal = ' - Rada Tilly'
+                break;
+            default:
+                sucursal = ''
+                break;
+        }
         var tablaInsumos;
         tablaInsumos = $('#table-supplies').DataTable({
+            "dom": 'Bfrtip',
+            "buttons": [
+                {
+                extend: 'excelHtml5',
+                text: 'Exportar Excel',
+                title: ('Orden de Pedido interna'+ sucursal)
+                },
+            ],
             "language": {
                 "info": "_TOTAL_ insumos",
                 "search": "Buscar",
@@ -56,6 +78,7 @@
                     "next": "Siguiente",
                     "previous": "Anterior",
                 },
+                "pageLength": 20,
                 "lengthMenu": 'Mostrar <select>'+
                     '<option value="10">10</value>'+
                     '<option value="20">20</value>'+
