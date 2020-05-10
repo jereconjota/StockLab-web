@@ -19,24 +19,22 @@
             </thead>
             
             <tbody id="tbody-table-supplies">
-                {{-- @foreach ($pornombre as $item => $is)
-                    <tr>
-                        <td>{{$item}}</td>
-                        @foreach ($is as $i)
-                            <td>{{$i->Nro_Articulo}}</td>
-                            <td>{{$i->Stock_Actual}}</td>
-                            <td>{{$i->PDP}}</td>
-                            @break
-                        @endforeach
-                    </tr>
-                @endforeach --}}
                 @foreach ($pdps as $item)
-                    <tr>
-                        <td>{{$item->Nombre_Insumo}}</td>
-                        <td>{{$item->Nro_Articulo}}</td>
-                        <td>{{$item->Stock_Real}}</td>
-                        <td>{{$item->PDP}}</td>
-                    </tr>
+                    @if ($item->Stock_Real == 0)
+                        <tr class="table-danger">
+                            <td>{{$item->Nombre_Insumo}}</td>
+                            <td>{{$item->Nro_Articulo}}</td>
+                            <td>{{$item->Stock_Real}}</td>
+                            <td>{{$item->PDP}}</td>
+                        </tr>
+                    @else
+                        <tr>
+                            <td>{{$item->Nombre_Insumo}}</td>
+                            <td>{{$item->Nro_Articulo}}</td>
+                            <td>{{$item->Stock_Real}}</td>
+                            <td>{{$item->PDP}}</td>
+                        </tr>
+                    @endif
                 @endforeach
             </tbody>
         </table>

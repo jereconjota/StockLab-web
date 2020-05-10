@@ -23,7 +23,13 @@
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css">
     @yield('styles')
-    
+    <style>
+        body{
+            /* background: #dcdcdc; */
+            height: 100vh;
+
+        }
+    </style>
 </head>
 <body>
     <div id="app">

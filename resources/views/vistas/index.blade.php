@@ -27,7 +27,7 @@
     </div>
 
     <div class="table-responsive my-4">
-        <table id="table-supplies" class="table table-bordered">
+        <table id="table-supplies" class="table table-hover table-bordered">
             <thead>
                 <tr class="table-info">
                     <th scope="col" data-sortable="true"> Nombre </th>

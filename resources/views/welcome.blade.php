@@ -88,26 +88,45 @@
                     @default
                         <h4>{{$ip}}</h4>
                 @endswitch
-               
-                 {{-- @if ($ip === "201.190.238.88")
-                    <h4>Sede Km3</h4>
-                @else
-                    @if ($ip === "168.228.143.124")
-                    <h4>Sede Rada Tilly</h4>                        
-                        @else
-                            @if ($ip === "192.168.10.241")
-                            <h4>Sede Rada Tilly</h4> 
-                            @endif
-                    @endif
-                @endif  --}}
 
             </div>
 
             <div class="links">
-                <a href="http://stocklab-web.test/stock">Actualizar Stock</a>
-                <a href="http://stocklab-web.test/pdp">Ver PDP</a>
-                {{-- <a href="http://stocklab-web.test/movimientos">Movimientos</a> --}}
-                <a href="#" data-toggle="modal" data-target="#about">Ayuda</a>
+                @switch($ip)
+                    @case("201.190.238.88")
+                        <a href="https://correo.diagnoslab.com.ar:3333/stock">Actualizar Stock</a>
+                        <a href="https://correo.diagnoslab.com.ar:3333/pdp">Ver PDP</a>
+                        {{-- <a href="https://correo.diagnoslab.com.ar:3333/movimientos">Movimientos</a> --}}
+                        <a href="#" data-toggle="modal" data-target="#about">Ayuda</a>
+                        @break
+
+                    @case("168.228.143.124")
+                        <a href="https://correo.diagnoslab.com.ar:3333/stock">Actualizar Stock</a>
+                        <a href="https://correo.diagnoslab.com.ar:3333/pdp">Ver PDP</a>
+                        {{-- <a href="https://correo.diagnoslab.com.ar:3333/movimientos">Movimientos</a> --}}
+                        <a href="#" data-toggle="modal" data-target="#about">Ayuda</a>
+                        @break
+
+                    @case("192.168.10.241")
+                        <a href="192.168.10.241:8000/stock">Actualizar Stock</a>
+                        <a href="192.168.10.241:8000/pdp">Ver PDP</a>
+                        {{-- <a href="192.168.10.241:8000/movimientos">Movimientos</a> --}}
+                        <a href="#" data-toggle="modal" data-target="#about">Ayuda</a>
+                        @break
+
+                    @case("127.0.0.1")
+                        <a href="http://stocklab-web.test/stock">Actualizar Stock</a>
+                        <a href="http://stocklab-web.test/pdp">Ver PDP</a>
+                        {{-- <a href="http://stocklab-web.test/movimientos">Movimientos</a> --}}
+                        <a href="#" data-toggle="modal" data-target="#about">Ayuda</a>
+                        @break
+
+                    @default
+                    <a href="http://stocklab-web.test/stock">Actualizar Stock</a>
+                    <a href="http://stocklab-web.test/pdp">Ver PDP</a>
+                    {{-- <a href="http://stocklab-web.test/movimientos">Movimientos</a> --}}
+                    <a href="#" data-toggle="modal" data-target="#about">Ayuda</a>
+                @endswitch
             </div>
         </div>
     </div>
