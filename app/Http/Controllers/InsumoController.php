@@ -22,19 +22,21 @@ class InsumoController extends Controller
         }
         $ip = $request->ip();
         // $ip = "192.168.10.242";
+        $ip = \substr($ip,0,11);
+
         switch ($ip) {
             case "127.0.0.1":
-            case "192.168.10.241":
+            case "192.168.10.": //"192.168.10.241"
                 $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','!=','Administracion']])->get();
                 return view('vistas.index',compact('sector','ip'));    
             break;
-            case "201.190.238.88":
+            case "201.190.237": //"201.190.237.77"
                 $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','=','Extraccion']])
                     ->orWhere('Nombre_Sector','=','Almacen')
                     ->orWhere('Nombre_Sector','=','Hematologia')->get();
                 return view('vistas.index',compact('sector','ip'));
                 break;
-            case "168.168.12.101":
+            case "168.228.143": //"168.228.143.XXX" ip dinamica 
                 $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','=','Extraccion']])
                     ->orWhere('Nombre_Sector','=','Almacen')->get();
                 return view('vistas.index',compact('sector','ip'));
@@ -43,34 +45,49 @@ class InsumoController extends Controller
             return view('errors.ipincorrecta');
         }
     }
-    
-    public function getPdp(Request $request)
-    {
+
+    public function getPdp(Request $request){
         if (!empty($request->user())) {
             $request->user()->authorizeRoles(['admin', 'user']);
         }
-        $ip = $request->ip();
-        // $ip = "192.168.10.242";
+
+        $pdps= collect([]);
+        $sucursal;
+        $ip = \Request::ip();
+        // $ip = "192.168.10.241";
+        
+        $ip = \substr($ip,0,11);
+
         switch ($ip) {
             case "127.0.0.1":
-            case "192.168.10.241":
-                $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','!=','Administracion']])->get();
-                return view('vistas.pdp',compact('sector','ip'));    
+            case "192.168.10.": //"192.168.10.241"
+                $sucursal = 1;   
             break;
-            case "201.190.238.88":
-                $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','=','Extraccion']])
-                    ->orWhere('Nombre_Sector','=','Almacen')
-                    ->orWhere('Nombre_Sector','=','Hematologia')->get();
-                return view('vistas.pdp',compact('sector','ip'));
+            case "201.190.237": //"201.190.237.77"
+                $sucursal = 2;   
                 break;
-            case "168.168.12.101":
-                $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','=','Extraccion']])
-                    ->orWhere('Nombre_Sector','=','Almacen')->get();
-                return view('vistas.pdp',compact('sector','ip'));
+            case "168.228.143": //"168.228.143.XXX" ip dinamica 
+                $sucursal = 3;   
                 break;
             default:
             return view('errors.ipincorrecta');
         }
+
+        $insumos=Insumo::where([['Estado_Insumo', 'Activo'],['Fk_Id_Sucursal', $sucursal]])->get()->groupBy('Nombre_Insumo');
+
+        foreach ($insumos as $key => $value) {
+            $stockgeneral=0;
+            $insumo;
+            foreach ($value as $i){
+                $stockgeneral = $stockgeneral + $i->Stock_Actual;
+                $insumo = $i;
+            }
+            if ($stockgeneral < $insumo->PDP || $stockgeneral == $insumo->PDP) {
+                $insumo->Stock_Real = $stockgeneral;
+                $pdps->push($insumo);
+            }
+        }
+        return view('vistas.pdp',compact('pdps','ip'));
     }
 
     /**
@@ -146,16 +163,18 @@ class InsumoController extends Controller
 
 
     public function apiGetInsumos(){
-    // $ip = \Request::ip();
-    $ip = "168.168.12.101";
+    $ip = \Request::ip();
+    // $ip = "168.168.12.101";
+    $ip = \substr($ip,0,11);
+
     switch ($ip) {
-        case "192.168.10.241":
+        case "192.168.10":
             $sucursal = 1;
             break;
-        case "201.190.238.88":
+        case "201.190.237":
             $sucursal = 2;
             break;
-        case "168.168.12.101":
+        case "168.228.143":
             $sucursal = 3;
             break;
         case "127.0.0.1":
@@ -192,25 +211,6 @@ class InsumoController extends Controller
         ->rawColumns(['action'])
         // ->make(true);
         ->toJson();
-    }
-
-    public function pdp(){
-        $ins=Insumo::where([['Estado_Insumo', 'Activo'],['Fk_Id_Sucursal', 2]])->get()->groupBy('Nombre_Insumo');
-        $pdps= collect([]);
-        $ip = \Request::ip();
-        foreach ($ins as $key => $value) {
-            $stockgeneral=0;
-            $insumo;
-            foreach ($value as $i){
-                $stockgeneral = $stockgeneral + $i->Stock_Actual;
-                $insumo = $i;
-            }
-            if ($stockgeneral < $insumo->PDP || $stockgeneral == $insumo->PDP) {
-                $insumo->Stock_Real = $stockgeneral;
-                $pdps->push($insumo);
-            }
-        }
-        return view('vistas.pdp',compact('pdps','ip'));
     }
 
     public function ip(){

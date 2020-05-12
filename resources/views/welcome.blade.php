@@ -69,15 +69,15 @@
                 StockLab
                 {{-- <img src="img/iconoStockLab.png" alt=""> --}}
                 @switch($ip)
-                    @case("201.190.238.88")
+                    @case("201.190.237")
                         <h4>Sede Km3</h4>
                         @break
 
-                    @case("168.228.143.124")
+                    @case("168.228.143")
                         <h4>Sede Rada Tilly</h4>
                         @break
 
-                    @case("192.168.10.241")
+                    @case("192.168.10.")
                         <h4>Sede Central</h4>
                         @break
 
@@ -93,38 +93,38 @@
 
             <div class="links">
                 @switch($ip)
-                    @case("201.190.238.88")
+                    @case("201.190.237")
                         <a href="https://correo.diagnoslab.com.ar:3333/stock">Actualizar Stock</a>
                         <a href="https://correo.diagnoslab.com.ar:3333/pdp">Ver PDP</a>
-                        {{-- <a href="https://correo.diagnoslab.com.ar:3333/movimientos">Movimientos</a> --}}
+                        <a href="https://correo.diagnoslab.com.ar:3333/movimientos" class="disabled" aria-disabled="true">Movimientos</a>
                         <a href="#" data-toggle="modal" data-target="#about">Ayuda</a>
                         @break
 
-                    @case("168.228.143.124")
+                    @case("168.228.143")
                         <a href="https://correo.diagnoslab.com.ar:3333/stock">Actualizar Stock</a>
                         <a href="https://correo.diagnoslab.com.ar:3333/pdp">Ver PDP</a>
-                        {{-- <a href="https://correo.diagnoslab.com.ar:3333/movimientos">Movimientos</a> --}}
+                        <a href="https://correo.diagnoslab.com.ar:3333/movimientos" class="disabled" aria-disabled="true">Movimientos</a>
                         <a href="#" data-toggle="modal" data-target="#about">Ayuda</a>
                         @break
 
-                    @case("192.168.10.241")
-                        <a href="192.168.10.241:8000/stock">Actualizar Stock</a>
-                        <a href="192.168.10.241:8000/pdp">Ver PDP</a>
-                        {{-- <a href="192.168.10.241:8000/movimientos">Movimientos</a> --}}
+                    @case("192.168.10.")
+                        <a href="http://192.168.10.241:8000/stock">Actualizar Stock</a>
+                        <a href="http://192.168.10.241:8000/pdp">Ver PDP</a>
+                        <a href="http://192.168.10.241:8000/movimientos" class="disabled" aria-disabled="true">Movimientos</a>
                         <a href="#" data-toggle="modal" data-target="#about">Ayuda</a>
                         @break
 
                     @case("127.0.0.1")
                         <a href="http://stocklab-web.test/stock">Actualizar Stock</a>
                         <a href="http://stocklab-web.test/pdp">Ver PDP</a>
-                        {{-- <a href="http://stocklab-web.test/movimientos">Movimientos</a> --}}
+                        <a href="http://stocklab-web.test/movimientos" class="btn disabled">Movimientos</a>
                         <a href="#" data-toggle="modal" data-target="#about">Ayuda</a>
                         @break
 
                     @default
                     <a href="http://stocklab-web.test/stock">Actualizar Stock</a>
                     <a href="http://stocklab-web.test/pdp">Ver PDP</a>
-                    {{-- <a href="http://stocklab-web.test/movimientos">Movimientos</a> --}}
+                    <a href="http://stocklab-web.test/movimientos" class="btn disabled">Movimientos</a>
                     <a href="#" data-toggle="modal" data-target="#about">Ayuda</a>
                 @endswitch
             </div>

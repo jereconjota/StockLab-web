@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use StockLab\Insumo;
+use StockLab\Movimiento;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -30,8 +32,6 @@ Route::get('insumosdt', function(){
 Route::get('insumos','InsumoController@apiGetInsumos');
 
 
-
-
 //Carga la tabla en Punto de Pedido
 Route::get('insumosenpdp', function(){
     $query = Insumo::where([/*['FK_Id_Categoria', $request->FK_Id_Categoria],*/['Estado_Insumo', 'Activo'],['Stock_Actual','<=', 'PDP']])->get();
@@ -40,5 +40,9 @@ Route::get('insumosenpdp', function(){
         ->toJson();
 });
 
-
-
+Route::get('movimientos', function(){
+    // return StockLab\Insumo::all();
+    return datatables()
+        ->eloquent(StockLab\Movimiento::query())
+        ->toJson();
+});

@@ -17,8 +17,21 @@ class MovementsController extends Controller
         if (!empty($request->user())) {
             $request->user()->authorizeRoles(['admin']);
         }
-        $movements = Movimiento::All()->sortBy('Fecha_Movimiento');
-        return view('vistas.movements',compact('movements')); 
+        $ip = \Request::ip();
+        $ip = \substr($ip,0,11);
+        $ip = "168.168.12.101";
+        switch ($ip) {
+            case "127.0.0.1":
+            case "192.168.10.": //"192.168.10.241"
+            case "201.190.237": //"201.190.237.77"
+            case "168.228.143": //"168.228.143.XXX" ip dinamica 
+                break;
+            default:
+            return view('errors.ipincorrecta');
+        }
+
+        // $movements = Movimiento::All()->sortBy('Fecha_Movimiento')->desc;
+        return view('vistas.movements',compact( 'ip')); 
     }
 
     /**
