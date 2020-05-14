@@ -21,7 +21,7 @@ class InsumoController extends Controller
             $request->user()->authorizeRoles(['admin', 'user']);
         }
         $ip = $request->ip();
-        // $ip = "192.168.10.242";
+        $ip = "201.190.237.77";
         $ip = \substr($ip,0,11);
 
         switch ($ip) {
@@ -183,7 +183,6 @@ class InsumoController extends Controller
         default:
             $sucursal = 0;
     }
-    
     if ($sucursal == 0) {
         $query = Insumo::where([['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0]])->get();
         }elseif ($sucursal == 1) {
@@ -199,19 +198,17 @@ class InsumoController extends Controller
                     ->orWhere([['Fk_Id_Sucursal','=', $sucursal],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0],['Fk_Id_Categoria','=','27']])
                     ->orWhere([['Fk_Id_Sucursal','=', $sucursal],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0],['Fk_Id_Categoria','=','28']])->get();
         }    
-        
-    
-
-
     return datatables($query)
         ->addColumn('action', function($row){
             $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->Id_Insumo.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editInsumo">Decrementar</a>';
             return $btn;
         })
         ->rawColumns(['action'])
-        // ->make(true);
         ->toJson();
     }
+
+
+
 
     public function ip(){
         // $ip = Request::ip();

@@ -40,6 +40,11 @@ Route::get('insumosenpdp', function(){
         ->toJson();
 });
 
+Route::get('getMovimientos', 'MovementsController@getMovimientos');
+
+
+
+
 Route::get('movimientos', function(){
     // return StockLab\Insumo::all();
     return datatables()

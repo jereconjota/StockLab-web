@@ -49,10 +49,10 @@
         //     console.log(data.ip)
         // });
         switch ('{{$ip}}') {
-            case '201.190.238.88':
+            case '201.190.237':
                 sucursal = ' - km3'
                 break;
-            case '127.0.0.1':
+            case '168.228.143':
                 sucursal = ' - Rada Tilly'
                 break;
             default:

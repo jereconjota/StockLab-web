@@ -26,10 +26,10 @@
             <caption>Movimientos sobre insumos</caption>
             <thead>
                 <tr class="table-info">
-                    <th scope="col" data-sortable="true"> Nombre </th>
-                    <th scope="col" data-field="date"> Descripcion </th>
+                    <th scope="col"> Nombre </th>
+                    <th scope="col"> Fecha del movimiento </th>
                     <th scope="col"> Descripcion </th>
-
+                    <th scope="col"> Observacion </th>
                 </tr>
             </thead>
             <tbody id="tbody-table-supplies">
@@ -68,11 +68,12 @@
     var tablaInsumos;
     tablaInsumos = $('#table-movements').DataTable({
         "ServerSide": true,
-        "ajax": "{{ url('api/movimientos') }}",
+        "ajax": "{{ url('api/getMovimientos') }}",
         "columns": [
                     {data: 'Nombre_Usuario'},
                     {data: 'Fecha_Movimiento'},
                     {data: 'Descripcion'},
+                    {data: 'observacion'},
                 ],
         "dom": 'Bfrtip',
         "buttons": [
@@ -104,5 +105,9 @@
             "infoFiltered": ""
         }
     });
+    
+    tablaInsumos.order.fixed( {
+        pre: [ 1, 'desc' ] //ordenamos por la columna 1 'Fecha del movimiento' 
+        });
 </script>   
 @endsection

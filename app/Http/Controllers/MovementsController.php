@@ -19,7 +19,7 @@ class MovementsController extends Controller
         }
         $ip = \Request::ip();
         $ip = \substr($ip,0,11);
-        $ip = "168.168.12.101";
+        // $ip = "168.168.12.101";
         switch ($ip) {
             case "127.0.0.1":
             case "192.168.10.": //"192.168.10.241"
@@ -33,6 +33,60 @@ class MovementsController extends Controller
         // $movements = Movimiento::All()->sortBy('Fecha_Movimiento')->desc;
         return view('vistas.movements',compact( 'ip')); 
     }
+
+    public function getMovimientos(Request $request){
+    $ip = \Request::ip();
+    $ip = "201.190.237";
+    $ip = \substr($ip,0,11);
+    $observacion = "observacion";
+
+    switch ($ip) {
+        case "192.168.10":
+            $sucursal = 'Diagnos';
+            break;
+        case "201.190.237":
+            $sucursal = 'Km3';
+            break;
+        case "168.228.143":
+            $sucursal = 'Rada Tilly';
+            break;
+        case "127.0.0.1":
+            $sucursal = 'Diagnos';
+            break;
+        default:
+            $sucursal = 'Diagnos';
+    }
+        // $query=Movimiento::All()->sortBy('Fecha_Movimiento');
+        // $query=Movimiento::where('Sucursal','=', $sucursal)->orderBy('Fecha_Movimiento','DESC');
+        $query=Movimiento::where('Sucursal','=', $sucursal)->get();
+        foreach ($query as $key) {
+            $pos = strpos($key->Descripcion, 'OBSERV');
+            $sub = substr($key->Descripcion, $pos);
+            $pos1 = strpos($sub, '{');
+            $sub1 = substr($sub, 0, $pos1);
+
+            $key->observacion = $sub1;
+            $key->Descripcion = substr($key->Descripcion,0,$pos);
+        }
+        return datatables($query)->toJson();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Show the form for creating a new resource.

@@ -10,7 +10,7 @@
 
     <div class="row my-2">
         <div class="col-md-3">
-            <select name="sectors" id="select-sectores" class="browser-default custom-select">
+            <select name="sectors" id="select-sectores" class="browser-default custom-select" disabled>
                 <option selected>SECTOR</option>
                 @foreach ($sector as $sec)
                         <option value="{{ $sec->Id_Sector }}">{{ $sec->Nombre_Sector }}</option>                        
@@ -19,7 +19,7 @@
         </div>
 
         <div class="col-md-3">
-            <select name="categories" id="select-categories" class="browser-default custom-select">
+            <select name="categories" id="select-categories" class="browser-default custom-select" disabled>
                 <option selected disabled>CATEGORIAS</option>
             </select>
         </div>
