@@ -94,23 +94,23 @@
             <div class="links">
                 @switch($ip)
                     @case("201.190.237")
-                        <a href="https://stock.diagnoslab.com.ar:3333/stock">Actualizar Stock</a>
-                        <a href="https://stock.diagnoslab.com.ar:3333/pdp">Ver PDP</a>
-                        <a href="https://stock.diagnoslab.com.ar:3333/movimientos">Movimientos</a>
+                        <a href="http://stock.diagnoslab.com.ar:3333/stock">Actualizar Stock</a>
+                        <a href="http://stock.diagnoslab.com.ar:3333/pdp">Ver PDP</a>
+                        <a href="http://stock.diagnoslab.com.ar:3333/movimientos">Movimientos</a>
                         <a href="#" data-toggle="modal" data-target="#about">Ayuda</a>
                         @break
 
                     @case("168.228.143")
-                        <a href="https://stock.diagnoslab.com.ar:3333/stock">Actualizar Stock</a>
-                        <a href="https://stock.diagnoslab.com.ar:3333/pdp">Ver PDP</a>
-                        <a href="https://stock.diagnoslab.com.ar:3333/movimientos" class="btn disabled" >Movimientos</a>
+                        <a href="http://stock.diagnoslab.com.ar:3333/stock">Actualizar Stock</a>
+                        <a href="http://stock.diagnoslab.com.ar:3333/pdp">Ver PDP</a>
+                        <a href="http://stock.diagnoslab.com.ar:3333/movimientos" class="btn disabled" >Movimientos</a>
                         <a href="#" data-toggle="modal" data-target="#about">Ayuda</a>
                         @break
 
                     @case("192.168.10.")
-                        <a href="http://192.168.10.241:8000/stock">Actualizar Stock</a>
-                        <a href="http://192.168.10.241:8000/pdp">Ver PDP</a>
-                        <a href="http://192.168.10.241:8000/movimientos" class="btn disabled">Movimientos</a>
+                        <a href="http://192.168.10.241:3333/stock">Actualizar Stock</a>
+                        <a href="http://192.168.10.241:3333/pdp">Ver PDP</a>
+                        <a href="http://192.168.10.241:3333/movimientos" class="btn disabled">Movimientos</a>
                         <a href="#" data-toggle="modal" data-target="#about">Ayuda</a>
                         @break
 

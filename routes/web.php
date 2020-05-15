@@ -2,7 +2,7 @@
 
 Route::get('/', function () {
     return view('auth/login');
-});
+})->middleware('guest');
 Route::get('/home', 'HomeController@index')->name('home');
 
 
@@ -31,7 +31,7 @@ Auth::routes();
 
 
 //////////////////////////////////////////////////////////////////////
-//Pruebas
+//PRUEBAS
 Route::get('prueba/{name}', 'PruebaController@prueba');
 Route::get('/name/{name}', function($name){
     return 'Hola soy '. $name;
