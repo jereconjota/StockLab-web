@@ -15,6 +15,9 @@ Route::get('pdp', 'InsumoController@getPdp')->middleware('auth');
 Route::get('/categoria','InsumoController@getCategorias');
 Route::get('/get-supplies','InsumoController@getSupplies');
 Route::post('editStock','InsumoController@store');
+
+Route::get('insumos/{sucursal}/','InsumoController@apiGetInsumos');
+
 //FIN CONTROLADOR INSUMOS
 
 

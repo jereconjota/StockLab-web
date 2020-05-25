@@ -115,7 +115,8 @@
         var tablaInsumos = $('#table-supplies').DataTable({
                 "processing": true,
                 "serverSide": true,
-                "ajax": "{{url('api/insumos')}}/"+sucursal,
+                // "ajax": "{{url('api/insumos')}}/"+sucursal,
+                "ajax": "{{ url('insumos')}}/"+sucursal,
                 "columns": [
                         {data: 'Nombre_Insumo'},
                         {data: 'Nro_Articulo'},
