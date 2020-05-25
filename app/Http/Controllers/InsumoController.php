@@ -48,18 +48,18 @@ class InsumoController extends Controller
 
         $sucursal = $request->session()->get('sucursal');
         switch ($sucursal) {
-            case "Testing":
-            case "Sede Central": 
+            case 0:
+            case 1: 
                 $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','!=','Administracion']])->get();
                 return view('vistas.index',compact('sector','sucursal'));    
             break;
-            case "Km3": 
+            case 2: 
                 $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','=','Extraccion']])
                     ->orWhere('Nombre_Sector','=','Almacen')
                     ->orWhere('Nombre_Sector','=','Hematologia')->get();
                 return view('vistas.index',compact('sector','sucursal'));
                 break;
-            case "Rada Tilly": 
+            case 3: 
                 $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','=','Extraccion']])
                     ->orWhere('Nombre_Sector','=','Almacen')->get();
                 return view('vistas.index',compact('sector','sucursal'));
@@ -96,21 +96,21 @@ class InsumoController extends Controller
         // }
 
         $sucursal_session = $request->session()->get('sucursal');
-        switch ($sucursal_session) {
-            case "Testing":
-            case "Sede Central": //"192.168.10.241"
-                $sucursal = 1;   
-            break;
-            case "Km3": //"201.190.237.77"
-                $sucursal = 2;   
-                break;
-            case "Rada Tilly": //"168.228.143.XXX" ip dinamica 
-                $sucursal = 3;   
-                break;
-            default:
-            return view('errors.ipincorrecta');
-        }
-        $insumos=Insumo::where([['Estado_Insumo', 'Activo'],['Fk_Id_Sucursal', $sucursal]])->get()->groupBy('Nombre_Insumo');
+        // switch ($sucursal_session) {
+        //     case "Testing":
+        //     case "Sede-Central": //"192.168.10.241"
+        //         $sucursal = 1;   
+        //     break;
+        //     case "Km3": //"201.190.237.77"
+        //         $sucursal = 2;   
+        //         break;
+        //     case "Rada-Tilly": //"168.228.143.XXX" ip dinamica 
+        //         $sucursal = 3;   
+        //         break;
+        //     default:
+        //     return view('errors.ipincorrecta');
+        // }
+        $insumos=Insumo::where([['Estado_Insumo', 'Activo'],['Fk_Id_Sucursal', $sucursal_session]])->get()->groupBy('Nombre_Insumo');
 
         foreach ($insumos as $key => $value) {
             $stockgeneral=0;
@@ -199,7 +199,7 @@ class InsumoController extends Controller
     }
 
 
-    public function apiGetInsumos($sucursal_session){
+    public function apiGetInsumos($sucursal){
     // $ip = \Request::ip();
     // // $ip = "168.168.12.101";
     // $ip = \substr($ip,0,11);
@@ -220,25 +220,25 @@ class InsumoController extends Controller
     //     default:
     //         $sucursal = 0;
     // }
-    $sucursal;
+    // $sucursal=2;
     // $sucursal_session = $this->getSucursalSession();
 
-    switch ($sucursal_session) {
-        case "Sede Central":
-            $sucursal = 1;
-            break;
-        case "Km3":
-            $sucursal = 2;
-            break;
-        case "Rada Tilly":
-            $sucursal = 3;
-            break;
-        case "Testing":
-            $sucursal = 0;
-            break;
-        default:
-            $sucursal = 0;
-    }
+    // switch ($sucursal_session) {
+    //     case "Sede-Central":
+    //         $sucursal = 1;
+    //         break;
+    //     case "Km3":
+    //         $sucursal = 2;
+    //         break;
+    //     case "Rada-Tilly":
+    //         $sucursal = 3;
+    //         break;
+    //     case "Testing":
+    //         $sucursal = 0;
+    //         break;
+    //     default:
+    //         $sucursal = 0;
+    // }
     if ($sucursal == 0) {
         $query = Insumo::where([['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0]])->get();
         }elseif ($sucursal == 1) {

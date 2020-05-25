@@ -29,7 +29,7 @@ Route::get('insumosdt', function(){
 });
 
 //Carga la tabla en Actualizar Stock
-Route::get('insumos/{suc}','InsumoController@apiGetInsumos');
+Route::get('insumos/{sucursal}','InsumoController@apiGetInsumos');
 
 
 //Carga la tabla en Punto de Pedido

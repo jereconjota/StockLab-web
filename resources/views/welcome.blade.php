@@ -92,31 +92,31 @@
                         <h4>{{$ip}}</h4>
                 @endswitch --}}
                 @switch($sucursal)
-                @case("Km3")
-                    <h4>Sede Km3</h4>
+                @case(2)
+                    <h4>Km3</h4>
                     @break
 
-                @case("Rada Tilly")
-                    <h4>Sede Rada Tilly</h4>
+                @case(3)
+                    <h4>Rada Tilly</h4>
                     @break
 
-                @case("Sede Central")
+                @case(1)
                     <h4>Sede Central</h4>
                     @break
 
-                @case("Testing")
+                @case(0)
                     <h4>Testing</h4>
                     @break
 
                 @default
-                    <h4>{{$sucursal}}</h4>
+                    <h4>{{$ip}}</h4>
             @endswitch
 
             </div>
 
             <div class="links">
                 @switch($sucursal)
-                    @case("Km3")
+                    @case(2)
                         @if ($ip == "127.0.0.1") {{-- si esta en testing --}}
                             <a href="http://stocklab-web.test/stock">Actualizar Stock</a>
                             <a href="http://stocklab-web.test/pdp">Ver PDP</a>
@@ -130,7 +130,7 @@
                             <a href="#" data-toggle="modal" data-target="#about">Ayuda</a>
                             @break
                         @endif
-                    @case("Rada Tilly")
+                    @case(3)
                         @if ($ip == "127.0.0.1") {{-- si esta en testing --}}
                             <a href="http://stocklab-web.test/stock">Actualizar Stock</a>
                             <a href="http://stocklab-web.test/pdp">Ver PDP</a>
@@ -144,7 +144,7 @@
                             <a href="#" data-toggle="modal" data-target="#about">Ayuda</a>
                             @break
                         @endif
-                    @case("Sede Central")
+                    @case(1)
                         @if ($ip == "192.168.10.241") {{-- si esta en la sede central --}}
                             <a href="http://192.168.10.241:3333/stock">Actualizar Stock</a>
                             <a href="http://192.168.10.241:3333/pdp">Ver PDP</a>
@@ -166,7 +166,7 @@
                                 @break
                             @endif
                         @endif
-                    @case("Testing")
+                    @case(0)
                         <a href="http://stocklab-web.test/stock">Actualizar Stock</a>
                         <a href="http://stocklab-web.test/pdp">Ver PDP</a>
                         <a href="http://stocklab-web.test/movimientos" class="btn disabled">Movimientos</a>

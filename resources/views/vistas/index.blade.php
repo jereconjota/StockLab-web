@@ -124,7 +124,6 @@
                         {data: 'PDP'},
                         {data: 'action', name: 'action', orderable: false, searchable: false},
                     ],
-                // "dom": '<"toolbar">frtip',
                 "pagingType": "simple",
                 "language": {
                     "info": "_TOTAL_ insumos",
@@ -147,7 +146,8 @@
                     "infoFiltered": ""
                 }
             });
-        // $("div.toolbar").html('<b>Custom tool bar! Text/images etc.</b>');
+
+            // $("div.toolbar").html('<b>Custom tool bar! Text/images etc.</b>');
         $('#select-categories').on('change',function() {
             chosenCategory = $(this).val()
             console.log(chosenCategory)

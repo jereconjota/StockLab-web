@@ -47,10 +47,10 @@
                             <div class="col-md-6">
                                 <select name="sucursal" id="sucursal" class="browser-default custom-select">
                                     {{-- <option value="" selected disabled>Seleccione...</option> --}}
-                                    {{-- <option value="Testing" selected>Testing</option> --}}
-                                    <option value="Sede Central">Diagnos</option>
-                                    <option value="Km3">Km3</option>
-                                    <option value="Rada Tilly">Rada Tilly</option>
+                                    <option value="0" selected>Testing</option>
+                                    <option value="1">Diagnos</option>
+                                    <option value="2">Km3</option>
+                                    <option value="3">Rada Tilly</option>
                                 </select>
 
                                 {{-- @error('password')
