@@ -4,7 +4,7 @@ Route::get('/', function () {
     return view('auth/login');
 })->middleware('guest');
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 
 
 //CONTROLADOR INSUMOS
@@ -23,7 +23,6 @@ Route::resource('movimientos','MovementsController')->middleware('auth');;
 
 //AUTENTICACION
 Auth::routes();
-
 
 
 

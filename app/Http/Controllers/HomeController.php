@@ -23,7 +23,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        // $ip = $request->ip();
+        $ip = $request->ip();
         // $ip = \substr($ip,0,11);
 
         // dd($request->session()->get('suc'));
@@ -35,6 +35,6 @@ class HomeController extends Controller
         // }
 
         $sucursal = $request->session()->get('sucursal');
-        return view('/welcome', compact('sucursal'));
+        return view('/welcome', compact('sucursal','ip'));
     }
 }
