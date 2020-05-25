@@ -3,6 +3,7 @@
 Route::get('/', function () {
     return view('auth/login');
 })->middleware('guest');
+
 Route::get('/home', 'HomeController@index')->name('home');
 
 
@@ -29,7 +30,6 @@ Auth::routes();
 
 
 
-
 //////////////////////////////////////////////////////////////////////
 //PRUEBAS
 Route::get('prueba/{name}', 'PruebaController@prueba');
@@ -44,6 +44,6 @@ Route::get('/dt', function () {
     $categoria= StockLab\Categoria::all();
     return view('ejemplodatatable/datatable', compact('sector','categoria'));
 });
-Route::get('/ip','InsumoController@ip');
+Route::get('/pruebas','InsumoController@pruebas');
 
 //Fin pruebas

@@ -15,35 +15,58 @@ class InsumoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
     public function index(Request $request)
     {
         if (!empty($request->user())) {
             $request->user()->authorizeRoles(['admin', 'user']);
         }
-        $ip = $request->ip();
-        $ip = "201.190.237.77";
-        $ip = \substr($ip,0,11);
+        // $ip = $request->ip();
+        // $ip = "201.190.237.77";
+        // $ip = \substr($ip,0,11);
 
-        switch ($ip) {
-            case "127.0.0.1":
-            case "192.168.10.": //"192.168.10.241"
+        // switch ($ip) {
+        //     case "127.0.0.1":
+        //     case "192.168.10.": //"192.168.10.241"
+        //         $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','!=','Administracion']])->get();
+        //         return view('vistas.index',compact('sector','ip'));    
+        //     break;
+        //     case "201.190.237": //"201.190.237.77"
+        //         $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','=','Extraccion']])
+        //             ->orWhere('Nombre_Sector','=','Almacen')
+        //             ->orWhere('Nombre_Sector','=','Hematologia')->get();
+        //         return view('vistas.index',compact('sector','ip'));
+        //         break;
+        //     case "168.228.143": //"168.228.143.XXX" ip dinamica 
+        //         $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','=','Extraccion']])
+        //             ->orWhere('Nombre_Sector','=','Almacen')->get();
+        //         return view('vistas.index',compact('sector','ip'));
+        //         break;
+        //     default:
+        //     return view('errors.ipincorrecta');
+        // }
+
+        $sucursal = $request->session()->get('sucursal');
+        switch ($sucursal) {
+            case "Testing":
+            case "Sede Central": 
                 $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','!=','Administracion']])->get();
-                return view('vistas.index',compact('sector','ip'));    
+                return view('vistas.index',compact('sector','sucursal'));    
             break;
-            case "201.190.237": //"201.190.237.77"
+            case "Km3": 
                 $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','=','Extraccion']])
                     ->orWhere('Nombre_Sector','=','Almacen')
                     ->orWhere('Nombre_Sector','=','Hematologia')->get();
-                return view('vistas.index',compact('sector','ip'));
+                return view('vistas.index',compact('sector','sucursal'));
                 break;
-            case "168.228.143": //"168.228.143.XXX" ip dinamica 
+            case "Rada Tilly": 
                 $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','=','Extraccion']])
                     ->orWhere('Nombre_Sector','=','Almacen')->get();
-                return view('vistas.index',compact('sector','ip'));
+                return view('vistas.index',compact('sector','sucursal'));
                 break;
             default:
             return view('errors.ipincorrecta');
-        }
+        }  
     }
 
     public function getPdp(Request $request){
@@ -53,26 +76,40 @@ class InsumoController extends Controller
 
         $pdps= collect([]);
         $sucursal;
-        $ip = \Request::ip();
+        // $ip = \Request::ip();
         // $ip = "192.168.10.241";
-        
-        $ip = \substr($ip,0,11);
+        // $ip = \substr($ip,0,11);
 
-        switch ($ip) {
-            case "127.0.0.1":
-            case "192.168.10.": //"192.168.10.241"
+        // switch ($ip) {
+        //     case "127.0.0.1":
+        //     case "192.168.10.": //"192.168.10.241"
+        //         $sucursal = 1;   
+        //     break;
+        //     case "201.190.237": //"201.190.237.77"
+        //         $sucursal = 2;   
+        //         break;
+        //     case "168.228.143": //"168.228.143.XXX" ip dinamica 
+        //         $sucursal = 3;   
+        //         break;
+        //     default:
+        //     return view('errors.ipincorrecta');
+        // }
+
+        $sucursal_session = $request->session()->get('sucursal');
+        switch ($sucursal_session) {
+            case "Testing":
+            case "Sede Central": //"192.168.10.241"
                 $sucursal = 1;   
             break;
-            case "201.190.237": //"201.190.237.77"
+            case "Km3": //"201.190.237.77"
                 $sucursal = 2;   
                 break;
-            case "168.228.143": //"168.228.143.XXX" ip dinamica 
+            case "Rada Tilly": //"168.228.143.XXX" ip dinamica 
                 $sucursal = 3;   
                 break;
             default:
             return view('errors.ipincorrecta');
         }
-
         $insumos=Insumo::where([['Estado_Insumo', 'Activo'],['Fk_Id_Sucursal', $sucursal]])->get()->groupBy('Nombre_Insumo');
 
         foreach ($insumos as $key => $value) {
@@ -87,7 +124,7 @@ class InsumoController extends Controller
                 $pdps->push($insumo);
             }
         }
-        return view('vistas.pdp',compact('pdps','ip'));
+        return view('vistas.pdp',compact('pdps','sucursal_session'));
     }
 
     /**
@@ -162,22 +199,41 @@ class InsumoController extends Controller
     }
 
 
-    public function apiGetInsumos(){
-    $ip = \Request::ip();
-    // $ip = "168.168.12.101";
-    $ip = \substr($ip,0,11);
+    public function apiGetInsumos($sucursal_session){
+    // $ip = \Request::ip();
+    // // $ip = "168.168.12.101";
+    // $ip = \substr($ip,0,11);
 
-    switch ($ip) {
-        case "192.168.10":
+    // switch ($ip) {
+    //     case "192.168.10":
+    //         $sucursal = 1;
+    //         break;
+    //     case "201.190.237":
+    //         $sucursal = 2;
+    //         break;
+    //     case "168.228.143":
+    //         $sucursal = 3;
+    //         break;
+    //     case "127.0.0.1":
+    //         $sucursal = 0;
+    //         break;
+    //     default:
+    //         $sucursal = 0;
+    // }
+    $sucursal;
+    // $sucursal_session = $this->getSucursalSession();
+
+    switch ($sucursal_session) {
+        case "Sede Central":
             $sucursal = 1;
             break;
-        case "201.190.237":
+        case "Km3":
             $sucursal = 2;
             break;
-        case "168.228.143":
+        case "Rada Tilly":
             $sucursal = 3;
             break;
-        case "127.0.0.1":
+        case "Testing":
             $sucursal = 0;
             break;
         default:
@@ -197,7 +253,7 @@ class InsumoController extends Controller
                     ->orWhere([['Fk_Id_Sucursal','=', $sucursal],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0],['Fk_Id_Categoria','=','26']])
                     ->orWhere([['Fk_Id_Sucursal','=', $sucursal],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0],['Fk_Id_Categoria','=','27']])
                     ->orWhere([['Fk_Id_Sucursal','=', $sucursal],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0],['Fk_Id_Categoria','=','28']])->get();
-        }    
+        } 
     return datatables($query)
         ->addColumn('action', function($row){
             $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->Id_Insumo.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editInsumo">Decrementar</a>';
@@ -210,16 +266,16 @@ class InsumoController extends Controller
 
 
 
-    public function ip(){
+    public function pruebas(){
         // $ip = Request::ip();
-        $ip2 = \Request::ip();
-        $ip3 = request()->ip();
-        $ip4 = \Request::getClientIp(true);
+        // $ip2 = \Request::ip();
+        // $ip3 = request()->ip();
+        // $ip4 = \Request::getClientIp(true);
         // var_dump($ip2, $ip3, $ip4);
 
         
-        $ins=Insumo::where([['Estado_Insumo', 'Activo'],['Fk_Id_Sucursal', 2]])->get()->groupBy('Nombre_Insumo');
-        $pdps= collect([]);
+        // $ins=Insumo::where([['Estado_Insumo', 'Activo'],['Fk_Id_Sucursal', 2]])->get()->groupBy('Nombre_Insumo');
+        // $pdps= collect([]);
         // foreach ($ins as $key => $val) {
         //     // dd($key->Nombre_Insumo);
         //     if ($key->Stock_Actual < $key->PDP || $key->Stock_Actual == $key->PDP) {
@@ -228,22 +284,20 @@ class InsumoController extends Controller
         // }
 
 
-        foreach ($ins as $key => $value) {
-            $stockgeneral=0;
-            $insumo;
-            foreach ($value as $i){
-                $stockgeneral = $stockgeneral + $i->Stock_Actual;
-                $insumo = $i;
-            }
-            if ($stockgeneral < $insumo->PDP || $stockgeneral == $insumo->PDP) {
-                $insumo->Stock_Real = $stockgeneral;
-                $pdps->push($insumo);
-            }
-        }
+        // foreach ($ins as $key => $value) {
+        //     $stockgeneral=0;
+        //     $insumo;
+        //     foreach ($value as $i){
+        //         $stockgeneral = $stockgeneral + $i->Stock_Actual;
+        //         $insumo = $i;
+        //     }
+        //     if ($stockgeneral < $insumo->PDP || $stockgeneral == $insumo->PDP) {
+        //         $insumo->Stock_Real = $stockgeneral;
+        //         $pdps->push($insumo);
+        //     }
+        // }
 
         // $pornombre = $pdps->groupBy('Nombre_Insumo');
-
-
 
         // $ins = DB::table('insumo')
         // ->where('Fk_Id_Sucursal', 2)
@@ -254,9 +308,24 @@ class InsumoController extends Controller
         // ->get();
         // $pornombre = $ins->groupBy('Nombre_Insumo');
         // $pornombre->toArray();
-
         // dd($pornombre->first()->first()->PDP);
         // dd($pdps);
-        return view('vistas.pdp2',compact('pdps'));
+        // return view('vistas.pdp2',compact('pdps'));
+
+
+        // $url = '/Users/vegeta/Documents/Projects';
+        // $url = Storage::url('sucursal.json');
+        // $exists = Storage::disk('/Users/vegeta/Documents/Projects')->exists('sucursal.json');
+        // $contents = Storage::get('/Users/vegeta/Documents/Projects/sucursal.json');
+        // $jsonString = file_get_contents(base_path('/Users/vegeta/Documents/Projects/sucursal.json'));
+        // $jsonString = storage_path() . '/Users/vegeta/Documents/Projects/sucursal.json';
+        // $data = json_decode(file_get_contents($jsonString), true);
+        // $JSON = file_get_contents($url);
+
+
+
+        $sucursal_session = \Session::get('sucursal');
+        
+        return $sucursal_session;
     }
 }

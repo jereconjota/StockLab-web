@@ -48,11 +48,11 @@
         // $.getJSON('http://ip.jsontest.com/?callback=?', function(data) {
         //     console.log(data.ip)
         // });
-        switch ('{{$ip}}') {
-            case '201.190.237':
+        switch ('{{$sucursal_session}}') {
+            case 'Km3':
                 sucursal = ' - km3'
                 break;
-            case '168.228.143':
+            case 'Rada Tilly':
                 sucursal = ' - Rada Tilly'
                 break;
             default:

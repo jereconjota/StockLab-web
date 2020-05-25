@@ -58,6 +58,9 @@
     .m-b-md {
         margin-bottom: 30px;
     }
+    .modal{
+        
+    }
 </style>
 @endsection
 
@@ -68,7 +71,7 @@
             <div class="title m-b-md">
                 StockLab
                 {{-- <img src="img/iconoStockLab.png" alt=""> --}}
-                @switch($ip)
+                {{-- @switch($ip)
                     @case("201.190.237")
                         <h4>Sede Km3</h4>
                         @break
@@ -87,34 +90,46 @@
 
                     @default
                         <h4>{{$ip}}</h4>
-                @endswitch
+                @endswitch --}}
+                @switch($sucursal)
+                @case("Km3")
+                    <h4>Sede Km3</h4>
+                    @break
+
+                @case("Rada Tilly")
+                    <h4>Sede Rada Tilly</h4>
+                    @break
+
+                @case("Sede Central")
+                    <h4>Sede Central</h4>
+                    @break
+
+                @case("Testing")
+                    <h4>Testing</h4>
+                    @break
+
+                @default
+                    <h4>{{$sucursal}}</h4>
+            @endswitch
 
             </div>
 
             <div class="links">
-                @switch($ip)
-                    @case("201.190.237")
-                        <a href="http://stock.diagnoslab.com.ar:3333/stock">Actualizar Stock</a>
-                        <a href="http://stock.diagnoslab.com.ar:3333/pdp">Ver PDP</a>
-                        <a href="http://stock.diagnoslab.com.ar:3333/movimientos">Movimientos</a>
-                        <a href="#" data-toggle="modal" data-target="#about">Ayuda</a>
-                        @break
-
-                    @case("168.228.143")
+                @switch($sucursal)
+                    @case("km3")
+                    @case("Rada Tilly")
                         <a href="http://stock.diagnoslab.com.ar:3333/stock">Actualizar Stock</a>
                         <a href="http://stock.diagnoslab.com.ar:3333/pdp">Ver PDP</a>
                         <a href="http://stock.diagnoslab.com.ar:3333/movimientos" class="btn disabled" >Movimientos</a>
                         <a href="#" data-toggle="modal" data-target="#about">Ayuda</a>
                         @break
-
-                    @case("192.168.10.")
+                    @case("Sede Central")
                         <a href="http://192.168.10.241:3333/stock">Actualizar Stock</a>
                         <a href="http://192.168.10.241:3333/pdp">Ver PDP</a>
                         <a href="http://192.168.10.241:3333/movimientos" class="btn disabled">Movimientos</a>
                         <a href="#" data-toggle="modal" data-target="#about">Ayuda</a>
                         @break
-
-                    @case("127.0.0.1")
+                    @case("Testing")
                         <a href="http://stocklab-web.test/stock">Actualizar Stock</a>
                         <a href="http://stocklab-web.test/pdp">Ver PDP</a>
                         <a href="http://stocklab-web.test/movimientos" class="btn disabled">Movimientos</a>
@@ -122,29 +137,31 @@
                         @break
 
                     @default
-                    <a href="http://stocklab-web.test/stock">Actualizar Stock</a>
-                    <a href="http://stocklab-web.test/pdp">Ver PDP</a>
-                    <a href="http://stocklab-web.test/movimientos" class="btn disabled">Movimientos</a>
-                    <a href="#" data-toggle="modal" data-target="#about">Ayuda</a>
+                        <a href="http://192.168.10.241:3333/stock">Actualizar Stock</a>
+                        <a href="http://192.168.10.241:3333/pdp">Ver PDP</a>
+                        <a href="http://192.168.10.241:3333/movimientos" class="btn disabled">Movimientos</a>
+                        <a href="#" data-toggle="modal" data-target="#about">Ayuda</a>
+                        @break
                 @endswitch
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal" tabindex="-1" role="dialog" id="about">
-    <div class="modal-dialog" role="document">
+<div class="modal fade" tabindex="-1" role="dialog" id="about">
+    <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">StockLab-Web 1.0</h5>
+          <h5 class="modal-title">StockLab-Web 1.0 ßeta</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">
-          <p class="text-center">FiGo Desarrollos™<br>
-            <a href = "mailto: figo.desarrollos@gmail.com">figo.desarrollos@gmail.com</a>
-            </p>
+        <div class="modal-body text-center">
+          <h2>FiGo Desarrollos™</h2>
+          {{-- <a href = "mailto: figo.desarrollos@gmail.com">figo.desarrollos@gmail.com</a> --}}
+          <p>Contacto <br> figo.desarrollos@gmail.com</p>
+          <p></p>
         </div>
       </div>
     </div>

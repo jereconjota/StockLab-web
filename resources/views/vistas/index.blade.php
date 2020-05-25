@@ -10,7 +10,7 @@
 
     <div class="row my-2">
         <div class="col-md-3">
-            <select name="sectors" id="select-sectores" class="browser-default custom-select" disabled>
+            <select name="sectors" id="select-sectores" class="browser-default custom-select">
                 <option selected>SECTOR</option>
                 @foreach ($sector as $sec)
                         <option value="{{ $sec->Id_Sector }}">{{ $sec->Nombre_Sector }}</option>                        
@@ -19,11 +19,14 @@
         </div>
 
         <div class="col-md-3">
-            <select name="categories" id="select-categories" class="browser-default custom-select" disabled>
-                <option selected disabled>CATEGORIAS</option>
+            <select name="categories" id="select-categories" class="browser-default custom-select">
+                <option selected>CATEGORIAS</option>
             </select>
         </div>
 
+        <div class="col-md-6 text-center">
+            <label for="" class="col-form-label text-md-right">Sucursal: {{$sucursal}}</label>
+        </div>
     </div>
 
     <div class="table-responsive my-4">
@@ -45,7 +48,7 @@
         </table>
     </div>
 
-    <div class="modal fade" id="editstocksupplie" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal" id="editstocksupplie" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header center-text">
@@ -81,10 +84,16 @@
         </div>
     </div>
 
-    @endsection
-    
-    @section('script')
+@endsection
+
+@section('script')
     <script type="text/javascript">
+    $(function () {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        }); 
         let sectorElegido
         $(document).ready(function(){
             $('#select-sectores').on('change',function(){
@@ -101,55 +110,51 @@
             });
         });
         let chosenCategory
-  
-    $(function () {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        }); 
-    var tablaInsumos = $('#table-supplies').DataTable({
-            "processing": true,
-            "serverSide": true,
-            "ajax": "{{ url('api/insumos') }}",
-            "columns": [
-                    {data: 'Nombre_Insumo'},
-                    {data: 'Nro_Articulo'},
-                    {data: 'NroLote'},
-                    {data: 'Stock_Actual'},
-                    {data: 'PDP'},
-                    {data: 'action', name: 'action', orderable: false, searchable: false},
-                ],
-            "pagingType": "simple",
-            "language": {
-                "info": "_TOTAL_ insumos",
-                "search": "Buscar",
-                "paginate": {
-                    "next": "Siguiente",
-                    "previous": "Anterior",
-                },
-                "lengthMenu": 'Mostrar <select>'+
-                    '<option value="10">10</value>'+
-                    '<option value="20">20</value>'+
-                    '<option value="30">30</value>'+
-                    '<option value="-1">Todos</value>'+
-                    '</select> registros',
-                "loadingRecords": "Cargando...",
-                "processing": "Procesando...",
-                "emptyTable": "No hay datos",
-                "zeroRecords": "No hay concidencias",
-                "infoEmpty": "",
-                "infoFiltered": ""
-            }
-        });
+    
 
+        var tablaInsumos = $('#table-supplies').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": "{{ url('api/insumos') }}/{{ $sucursal }}",
+                "columns": [
+                        {data: 'Nombre_Insumo'},
+                        {data: 'Nro_Articulo'},
+                        {data: 'NroLote'},
+                        {data: 'Stock_Actual'},
+                        {data: 'PDP'},
+                        {data: 'action', name: 'action', orderable: false, searchable: false},
+                    ],
+                // "dom": '<"toolbar">frtip',
+                "pagingType": "simple",
+                "language": {
+                    "info": "_TOTAL_ insumos",
+                    "search": "Buscar",
+                    "paginate": {
+                        "next": "Siguiente",
+                        "previous": "Anterior",
+                    },
+                    "lengthMenu": 'Mostrar <select>'+
+                        '<option value="10">10</value>'+
+                        '<option value="20">20</value>'+
+                        '<option value="30">30</value>'+
+                        '<option value="-1">Todos</value>'+
+                        '</select> registros',
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "emptyTable": "No hay datos",
+                    "zeroRecords": "No hay concidencias",
+                    "infoEmpty": "",
+                    "infoFiltered": ""
+                }
+            });
+        // $("div.toolbar").html('<b>Custom tool bar! Text/images etc.</b>');
         $('#select-categories').on('change',function() {
             chosenCategory = $(this).val()
             console.log(chosenCategory)
             // tablaInsumos.fnFilter('ABON')
             tablaInsumos.draw();
         })
-        
+            
         $('body').on('click', '.editInsumo', function () {
                 var Id_Insumo = $(this).data('id');
                 $.get("{{ route('stock.index') }}" +'/' + Id_Insumo +'/edit', function (data) {
