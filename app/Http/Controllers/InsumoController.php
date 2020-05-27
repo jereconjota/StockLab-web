@@ -199,7 +199,7 @@ class InsumoController extends Controller
     }
 
 
-    public function apiGetInsumos($sucursal){
+    public function apiGetInsumos(Request $request){
     // $ip = \Request::ip();
     // // $ip = "168.168.12.101";
     // $ip = \substr($ip,0,11);
@@ -239,6 +239,8 @@ class InsumoController extends Controller
     //     default:
     //         $sucursal = 0;
     // }
+
+    $sucursal = $request->sucursal;
     if ($sucursal == 0) {
         $query = Insumo::where([['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0]])->get();
         }elseif ($sucursal == 1) {

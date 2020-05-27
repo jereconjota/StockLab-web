@@ -16,7 +16,9 @@ Route::get('/categoria','InsumoController@getCategorias');
 Route::get('/get-supplies','InsumoController@getSupplies');
 Route::post('editStock','InsumoController@store');
 
-Route::get('insumos/{sucursal}/','InsumoController@apiGetInsumos');
+Route::get('getStock','InsumoController@apiGetInsumos');
+
+// Route::get('insumos/{sucursal}/','InsumoController@apiGetInsumos');
 
 //FIN CONTROLADOR INSUMOS
 

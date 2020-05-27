@@ -94,29 +94,20 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         }); 
-        let sectorElegido
-        $(document).ready(function(){
-            $('#select-sectores').on('change',function(){
-                sectorElegido = $(this).val();
-                if ($.trim(sectorElegido) != '') {
-                    $.get('categoria',{FK_Id_Sector: sectorElegido}, function(categorias) {
-                        $('#select-categories').empty();
-                        $('#select-categories').append('<option selected>CATEGORIA</option>');
-                        $.each(categorias,function(index, value) {
-                            $('#select-categories').append("<option value='"+ index +"'> "+ value +"</option>");
-                        }); 
-                    });
-                }
-            });
-        });
-        let chosenCategory
     
         const sucursal = @json($sucursal);
+
         var tablaInsumos = $('#table-supplies').DataTable({
                 "processing": true,
                 "serverSide": true,
-                // "ajax": "{{url('api/insumos')}}/"+sucursal,
-                "ajax": "{{ url('insumos')}}/"+sucursal,
+                // "ajax": "{{url('api/insumos')}}",
+                "ajax": {
+                    "type": "GET",
+                    "url": "getStock",
+                    "data": {
+                        "sucursal": sucursal,
+                        }
+                },
                 "columns": [
                         {data: 'Nombre_Insumo'},
                         {data: 'Nro_Articulo'},
@@ -148,7 +139,22 @@
                 }
             });
 
-            // $("div.toolbar").html('<b>Custom tool bar! Text/images etc.</b>');
+        let sectorElegido
+        $(document).ready(function(){
+            $('#select-sectores').on('change',function(){
+                sectorElegido = $(this).val();
+                if ($.trim(sectorElegido) != '') {
+                    $.get('categoria',{FK_Id_Sector: sectorElegido}, function(categorias) {
+                        $('#select-categories').empty();
+                        $('#select-categories').append('<option selected>CATEGORIA</option>');
+                        $.each(categorias,function(index, value) {
+                            $('#select-categories').append("<option value='"+ index +"'> "+ value +"</option>");
+                        }); 
+                    });
+                }
+            });
+        });
+        let chosenCategory
         $('#select-categories').on('change',function() {
             chosenCategory = $(this).val()
             console.log(chosenCategory)
