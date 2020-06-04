@@ -45,10 +45,10 @@
                             <label for="sucursal" class="col-md-4 col-form-label text-md-right">Sucursal</label>
 
                             <div class="col-md-6">
-                                <select name="sucursal" id="sucursal" class="browser-default custom-select">
+                                <select name="sucursal" id="sucursal" class="browser-default custom-select" disabled>
                                     {{-- <option value="" selected disabled>Seleccione...</option> --}}
-                                    <option value="0" selected>Testing</option>
-                                    <option value="1">Diagnos</option>
+                                    {{-- <option value="0" selected>Testing</option> --}}
+                                    <option value="1">Centro</option>
                                     <option value="2">Km3</option>
                                     <option value="3">Rada Tilly</option>
                                 </select>

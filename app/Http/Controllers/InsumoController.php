@@ -21,53 +21,55 @@ class InsumoController extends Controller
         if (!empty($request->user())) {
             $request->user()->authorizeRoles(['admin', 'user']);
         }
-        // $ip = $request->ip();
-        // $ip = "201.190.237.77";
-        // $ip = \substr($ip,0,11);
-
-        // switch ($ip) {
-        //     case "127.0.0.1":
-        //     case "192.168.10.": //"192.168.10.241"
-        //         $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','!=','Administracion']])->get();
-        //         return view('vistas.index',compact('sector','ip'));    
-        //     break;
-        //     case "201.190.237": //"201.190.237.77"
-        //         $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','=','Extraccion']])
-        //             ->orWhere('Nombre_Sector','=','Almacen')
-        //             ->orWhere('Nombre_Sector','=','Hematologia')->get();
-        //         return view('vistas.index',compact('sector','ip'));
-        //         break;
-        //     case "168.228.143": //"168.228.143.XXX" ip dinamica 
-        //         $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','=','Extraccion']])
-        //             ->orWhere('Nombre_Sector','=','Almacen')->get();
-        //         return view('vistas.index',compact('sector','ip'));
-        //         break;
-        //     default:
-        //     return view('errors.ipincorrecta');
-        // }
-
         $sucursal = $request->session()->get('sucursal');
-        switch ($sucursal) {
-            case 0:
-            case 1: 
+
+        $ip = $request->ip();
+        // $ip = "201.190.237.77";
+        $ip = \substr($ip,0,10);
+
+        switch ($ip) {
+            case "127.0.0.1":
+            case "192.168.10":
                 $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','!=','Administracion']])->get();
-                return view('vistas.index',compact('sector','sucursal'));    
+                return view('vistas.index',compact('sector','ip'));    
             break;
-            case 2: 
+            case "201.190.23":
                 $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','=','Extraccion']])
                     ->orWhere('Nombre_Sector','=','Almacen')
-                    ->orWhere('Nombre_Sector','=','Urianalisys')
                     ->orWhere('Nombre_Sector','=','Hematologia')->get();
-                return view('vistas.index',compact('sector','sucursal'));
+                return view('vistas.index',compact('sector','ip'));
                 break;
-            case 3: 
+            case "168.228.14": //"168.228.143.XXX" ip dinamica 
                 $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','=','Extraccion']])
                     ->orWhere('Nombre_Sector','=','Almacen')->get();
-                return view('vistas.index',compact('sector','sucursal'));
+                return view('vistas.index',compact('sector','ip'));
                 break;
             default:
             return view('errors.ipincorrecta');
         }
+
+        
+        // switch ($sucursal) {
+        //     case 0:
+        //     case 1: 
+        //         $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','!=','Administracion']])->get();
+        //         return view('vistas.index',compact('sector','sucursal'));    
+        //     break;
+        //     case 2: 
+        //         $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','=','Extraccion']])
+        //             ->orWhere('Nombre_Sector','=','Almacen')
+        //             ->orWhere('Nombre_Sector','=','Urianalisys')
+        //             ->orWhere('Nombre_Sector','=','Hematologia')->get();
+        //         return view('vistas.index',compact('sector','sucursal'));
+        //         break;
+        //     case 3: 
+        //         $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','=','Extraccion']])
+        //             ->orWhere('Nombre_Sector','=','Almacen')->get();
+        //         return view('vistas.index',compact('sector','sucursal'));
+        //         break;
+        //     default:
+        //     return view('errors.ipincorrecta');
+        //}
     }
 
     public function getPdp(Request $request){
@@ -77,41 +79,29 @@ class InsumoController extends Controller
 
         $pdps= collect([]);
         $sucursal;
-        // $ip = \Request::ip();
-        // $ip = "192.168.10.241";
-        // $ip = \substr($ip,0,11);
-
-        // switch ($ip) {
-        //     case "127.0.0.1":
-        //     case "192.168.10.": //"192.168.10.241"
-        //         $sucursal = 1;   
-        //     break;
-        //     case "201.190.237": //"201.190.237.77"
-        //         $sucursal = 2;   
-        //         break;
-        //     case "168.228.143": //"168.228.143.XXX" ip dinamica 
-        //         $sucursal = 3;   
-        //         break;
-        //     default:
-        //     return view('errors.ipincorrecta');
-        // }
-
         $sucursal_session = $request->session()->get('sucursal');
-        // switch ($sucursal_session) {
-        //     case "Testing":
-        //     case "Sede-Central": //"192.168.10.241"
-        //         $sucursal = 1;   
-        //     break;
-        //     case "Km3": //"201.190.237.77"
-        //         $sucursal = 2;   
-        //         break;
-        //     case "Rada-Tilly": //"168.228.143.XXX" ip dinamica 
-        //         $sucursal = 3;   
-        //         break;
-        //     default:
-        //     return view('errors.ipincorrecta');
-        // }
-        $insumos=Insumo::where([['Estado_Insumo', 'Activo'],['Fk_Id_Sucursal', $sucursal_session]])->get()->groupBy('Nombre_Insumo');
+
+        $ip = \Request::ip();
+        // $ip = "192.168.10.241";
+        $ip = \substr($ip,0,11);
+
+        switch ($ip) {
+            case "127.0.0.1":
+            case "192.168.10": //"192.168.10.241"
+                $sucursal = 1;   
+            break;
+            case "201.190.23": //"201.190.237.77"
+                $sucursal = 2;   
+                break;
+            case "168.228.14": //"168.228.143.XXX" ip dinamica 
+                $sucursal = 3;   
+                break;
+            default:
+            return view('errors.ipincorrecta');
+        }
+
+
+        $insumos=Insumo::where([['Estado_Insumo', 'Activo'],['Fk_Id_Sucursal', $sucursal]])->get()->groupBy('Nombre_Insumo');
 
         foreach ($insumos as $key => $value) {
             $stockgeneral=0;
@@ -160,20 +150,20 @@ class InsumoController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $supplie = Insumo::find($id);
-        $supplie->Stock_Actual = $supplie->Stock_Actual - $request->unidades;
-        $supplie->save();
-        return redirect()->route('stock.index')->with('success','Item created successfully!');
-    }
+    // /**
+    //  * Update the specified resource in storage.
+    //  *
+    //  * @param  \Illuminate\Http\Request  $request
+    //  * @param  int  $id
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function update(Request $request, $id)
+    // {
+    //     $supplie = Insumo::find($id);
+    //     $supplie->Stock_Actual = $supplie->Stock_Actual - $request->unidades;
+    //     $supplie->save();
+    //     return redirect()->route('stock.index')->with('success','Item created successfully!');
+    // }
 
 
     public function getCategorias(Request $request){
@@ -188,68 +178,51 @@ class InsumoController extends Controller
         }
     }
 
-    //este traia los insumos con el change del select categoria
-    public function getSupplies(Request $request){
-        if ($request->ajax()) {
-            $supplies = Insumo::where([['FK_Id_Categoria', $request->FK_Id_Categoria],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0]])->get();
-            // if ($supplies !== null) {
-            //     foreach ($supplies as $sup) {
-            //         $arraysupplies[$sup->Id_Insumo] = $sup;
-            //     }
-            //     return response()->json($arraysupplies);
-                return datatables($supplies)
-                ->addColumn('action', function($row){
-                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->Id_Insumo.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editInsumo">Decrementar</a>';
-                    return $btn;
-                })
-                ->rawColumns(['action'])
-                ->toJson();
-            // }   
-        }
-    }
+    // //este traia los insumos con el change del select categoria
+    // public function getSupplies(Request $request){
+    //     if ($request->ajax()) {
+    //         $supplies = Insumo::where([['FK_Id_Categoria', $request->FK_Id_Categoria],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0]])->get();
+    //         // if ($supplies !== null) {
+    //         //     foreach ($supplies as $sup) {
+    //         //         $arraysupplies[$sup->Id_Insumo] = $sup;
+    //         //     }
+    //         //     return response()->json($arraysupplies);
+    //             return datatables($supplies)
+    //             ->addColumn('action', function($row){
+    //                 $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->Id_Insumo.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editInsumo">Decrementar</a>';
+    //                 return $btn;
+    //             })
+    //             ->rawColumns(['action'])
+    //             ->toJson();
+    //         // }   
+    //     }
+    // }
 
 
     public function apiGetInsumos(Request $request){
-    // $ip = \Request::ip();
-    // // $ip = "168.168.12.101";
-    // $ip = \substr($ip,0,11);
-
-    // switch ($ip) {
-    //     case "192.168.10":
-    //         $sucursal = 1;
-    //         break;
-    //     case "201.190.237":
-    //         $sucursal = 2;
-    //         break;
-    //     case "168.228.143":
-    //         $sucursal = 3;
-    //         break;
-    //     case "127.0.0.1":
-    //         $sucursal = 0;
-    //         break;
-    //     default:
-    //         $sucursal = 0;
-    // }
+    $ip = \Request::ip();
+    // $ip = "168.168.12.101";
+    $ip = \substr($ip,0,10);
+    $sucursal;
+    switch ($ip) {
+        case "192.168.10":
+            $sucursal = 1;
+            break;
+        case "201.190.23":
+            $sucursal = 2;
+            break;
+        case "168.228.14":
+            $sucursal = 3;
+            break;
+        case "127.0.0.1":
+            $sucursal = 0;
+            break;
+        default:
+            $sucursal = 0;
+    }
     // $sucursal=2;
     // $sucursal_session = $this->getSucursalSession();
-
-    // switch ($sucursal_session) {
-    //     case "Sede-Central":
-    //         $sucursal = 1;
-    //         break;
-    //     case "Km3":
-    //         $sucursal = 2;
-    //         break;
-    //     case "Rada-Tilly":
-    //         $sucursal = 3;
-    //         break;
-    //     case "Testing":
-    //         $sucursal = 0;
-    //         break;
-    //     default:
-    //         $sucursal = 0;
-    // }
-    $sucursal = $request->session()->get('sucursal');
+    // $sucursal = $request->session()->get('sucursal');
 
     // $sucursal = $request->sucursal;
     if ($sucursal == 0) {
@@ -269,6 +242,8 @@ class InsumoController extends Controller
                     ->orWhere([['Fk_Id_Sucursal','=', $sucursal],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0],['Fk_Id_Categoria','=','42']])
                     ->orWhere([['Fk_Id_Sucursal','=', $sucursal],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0],['Fk_Id_Categoria','=','43']])->get();
         } 
+
+
     return datatables($query)
         ->addColumn('action', function($row){
             $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->Id_Insumo.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editInsumo">Decrementar</a>';

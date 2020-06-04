@@ -71,7 +71,7 @@
             <div class="title m-b-md">
                 StockLab
                 {{-- <img src="img/iconoStockLab.png" alt=""> --}}
-                {{-- @switch($ip)
+                @switch($ip)
                     @case("201.190.237")
                         <h4>Sede Km3</h4>
                         @break
@@ -90,8 +90,8 @@
 
                     @default
                         <h4>{{$ip}}</h4>
-                @endswitch --}}
-                @switch($sucursal)
+                @endswitch
+                {{-- @switch($sucursal)
                 @case(2)
                     <h4>Km3</h4>
                     @break
@@ -110,20 +110,55 @@
 
                 @default
                     <h4>{{$ip}}</h4>
-            @endswitch
+            @endswitch --}}
 
             </div>
 
             <div class="links">
-                @switch($sucursal)
+                @switch($ip)
+                    @case("201.190.238")
+                        <a href="http://stock.diagnoslab.com.ar:3333/stock">Actualizar Stock</a>
+                        <a href="http://stock.diagnoslab.com.ar:3333/pdp">Ver PDP</a>
+                        <a href="http://stock.diagnoslab.com.ar:3333/movimientos">Movimientos</a>
+                        <a href="#" data-toggle="modal" data-target="#about">Ayuda</a>
+                        @break
+
+                    @case("168.228.143")
+                        <a href="http://stock.diagnoslab.com.ar:3333/stock">Actualizar Stock</a>
+                        <a href="http://stock.diagnoslab.com.ar:3333/pdp">Ver PDP</a>
+                        <a href="http://stock.diagnoslab.com.ar:3333/movimientos" class="btn disabled" >Movimientos</a>
+                        <a href="#" data-toggle="modal" data-target="#about">Ayuda</a>
+                        @break
+
+                    @case("192.168.10.")
+                        <a href="http://192.168.10.241:3333/stock">Actualizar Stock</a>
+                        <a href="http://192.168.10.241:3333/pdp">Ver PDP</a>
+                        <a href="http://192.168.10.241:3333/movimientos" class="btn disabled">Movimientos</a>
+                        <a href="#" data-toggle="modal" data-target="#about">Ayuda</a>
+                        @break
+
+                    @case("127.0.0.1")
+                        <a href="http://stocklab-web.test/stock">Actualizar Stock</a>
+                        <a href="http://stocklab-web.test/pdp">Ver PDP</a>
+                        <a href="http://stocklab-web.test/movimientos" class="btn disabled">Movimientos</a>
+                        <a href="#" data-toggle="modal" data-target="#about">Ayuda</a>
+                        @break
+
+                    @default
+                    <a href="http://stocklab-web.test/stock">Actualizar Stock</a>
+                    <a href="http://stocklab-web.test/pdp">Ver PDP</a>
+                    <a href="http://stocklab-web.test/movimientos" class="btn disabled">Movimientos</a>
+                    <a href="#" data-toggle="modal" data-target="#about">Ayuda</a>
+                @endswitch
+                {{-- @switch($sucursal)
                     @case(2)
-                        @if ($ip == "127.0.0.1") {{-- si esta en testing --}}
+                        @if ($ip == "127.0.0.1") {{-- si esta en testing -}}
                             <a href="http://stocklab-web.test/stock">Actualizar Stock</a>
                             <a href="http://stocklab-web.test/pdp">Ver PDP</a>
                             <a href="http://stocklab-web.test/movimientos" class="btn disabled">Movimientos</a>
                             <a href="#" data-toggle="modal" data-target="#about">Ayuda</a>
                             @break
-                        @else {{--  --}}
+                        @else {{--  -}}
                             <a href="http://stock.diagnoslab.com.ar:3333/stock">Actualizar Stock</a>
                             <a href="http://stock.diagnoslab.com.ar:3333/pdp">Ver PDP</a>
                             <a href="http://stock.diagnoslab.com.ar:3333/movimientos" class="btn disabled" >Movimientos</a>
@@ -131,13 +166,13 @@
                             @break
                         @endif
                     @case(3)
-                        @if ($ip == "127.0.0.1") {{-- si esta en testing --}}
+                        @if ($ip == "127.0.0.1") {{-- si esta en testing -}}
                             <a href="http://stocklab-web.test/stock">Actualizar Stock</a>
                             <a href="http://stocklab-web.test/pdp">Ver PDP</a>
                             <a href="http://stocklab-web.test/movimientos" class="btn disabled">Movimientos</a>
                             <a href="#" data-toggle="modal" data-target="#about">Ayuda</a>
                             @break
-                        @else {{--  --}}
+                        @else {{--  -}}
                             <a href="http://stock.diagnoslab.com.ar:3333/stock">Actualizar Stock</a>
                             <a href="http://stock.diagnoslab.com.ar:3333/pdp">Ver PDP</a>
                             <a href="http://stock.diagnoslab.com.ar:3333/movimientos" class="btn disabled" >Movimientos</a>
@@ -145,20 +180,20 @@
                             @break
                         @endif
                     @case(1)
-                        @if ($ip == "192.168.10.241") {{-- si esta en la sede central --}}
+                        @if ($ip == "192.168.10.241") {{-- si esta en la sede central -}}
                             <a href="http://192.168.10.241:3333/stock">Actualizar Stock</a>
                             <a href="http://192.168.10.241:3333/pdp">Ver PDP</a>
                             <a href="http://192.168.10.241:3333/movimientos" class="btn disabled">Movimientos</a>
                             <a href="#" data-toggle="modal" data-target="#about">Ayuda</a>
                             @break
                         @else 
-                            @if ($ip == "127.0.0.1") {{-- si esta en testing --}}
+                            @if ($ip == "127.0.0.1") {{-- si esta en testing -}}
                                 <a href="http://stocklab-web.test/stock">Actualizar Stock</a>
                                 <a href="http://stocklab-web.test/pdp">Ver PDP</a>
                                 <a href="http://stocklab-web.test/movimientos" class="btn disabled">Movimientos</a>
                                 <a href="#" data-toggle="modal" data-target="#about">Ayuda</a>
                                 @break 
-                            @else {{-- si esta en otro lado, o en otra red que no sea la local --}}
+                            @else {{-- si esta en otro lado, o en otra red que no sea la local -}}
                                 <a href="http://stock.diagnoslab.com.ar:3333/stock">Actualizar Stock</a>
                                 <a href="http://stock.diagnoslab.com.ar:3333/pdp">Ver PDP</a>
                                 <a href="http://stock.diagnoslab.com.ar:3333/movimientos" class="btn disabled" >Movimientos</a>
@@ -179,7 +214,7 @@
                         <a href="http://stock.diagnoslab.com.ar:3333/movimientos" class="btn disabled" >Movimientos</a>
                         <a href="#" data-toggle="modal" data-target="#about">Ayuda</a>
                         @break
-                @endswitch
+                @endswitch --}}
             </div>
         </div>
     </div>

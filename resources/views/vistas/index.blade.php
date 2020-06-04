@@ -24,9 +24,9 @@
             </select>
         </div>
 
-        <div class="col-md-6 text-center">
+        {{-- <div class="col-md-6 text-center">
             <label for="" class="col-form-label text-md-right">Sucursal: {{$sucursal}}</label>
-        </div>
+        </div> --}}
     </div>
 
     <div class="table-responsive my-4">
@@ -98,7 +98,7 @@
     });
 
     
-    const sucursal = @json($sucursal);
+
     tablaInsumos = $('#table-supplies').DataTable({
             "processing": true,
             "serverSide": true,
