@@ -12,16 +12,15 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Scripts -->
-    <!-- {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}} -->
+    {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
 
-    <link href="{{ asset('DataTables/datatables.min.css') }}" rel="stylesheet" type="text/css"/>
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    {{-- <link href="{{ asset('css/style.css') }}" rel="stylesheet"> --}}
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('DataTables/datatables.min.css') }}" />
+
+    <link rel="stylesheet"  type="text/css" href="{{ asset('css/app.css') }}" rel="stylesheet">
     @yield('styles')
     <style>
         body{
@@ -102,13 +101,9 @@
     </div>
     
     </div>
-    {{-- <script
-    src="https://code.jquery.com/jquery-3.5.1.js"
-    integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-    crossorigin="anonymous"></script> --}}
-    <script type="text/javascript" src="{{ asset('DataTables/datatables.min.js') }}" ></script>
-    {{-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="{{ asset('DataTables/datatables.min.js') }}" ></script>
+
     @yield('script')
 </body>
 </html>

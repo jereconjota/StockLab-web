@@ -88,134 +88,150 @@
 
 @section('script')
     <script type="text/javascript">
+    var tablaInsumos;
     $(function () {
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         }); 
+    });
+
     
-        const sucursal = @json($sucursal);
-
-        var tablaInsumos = $('#table-supplies').DataTable({
-                "processing": true,
-                "serverSide": true,
-                // "ajax": "{{url('api/insumos')}}",
-                "ajax": {
-                    "type": "GET",
-                    "url": "getStock",
-                    "data": {
-                        "sucursal": sucursal,
-                        }
-                },
-                "columns": [
-                        {data: 'Nombre_Insumo'},
-                        {data: 'Nro_Articulo'},
-                        {data: 'NroLote'},
-                        {data: 'Stock_Actual'},
-                        {data: 'PDP'},
-                        {data: 'action', name: 'action', orderable: false, searchable: false},
-                    ],
-                "pagingType": "simple",
-                "language": {
-                    "info": "_TOTAL_ insumos",
-                    "search": "Buscar",
-                    "paginate": {
-                        "next": "Siguiente",
-                        "previous": "Anterior",
-                    },
-                    "lengthMenu": 'Mostrar <select>'+
-                        '<option value="10">10</value>'+
-                        '<option value="20">20</value>'+
-                        '<option value="30">30</value>'+
-                        '<option value="-1">Todos</value>'+
-                        '</select> registros',
-                    "loadingRecords": "Cargando...",
-                    "processing": "Procesando...",
-                    "emptyTable": "No hay datos",
-                    "zeroRecords": "No hay concidencias",
-                    "infoEmpty": "",
-                    "infoFiltered": ""
-                }
-            });
-
-        let sectorElegido
-        $(document).ready(function(){
-            $('#select-sectores').on('change',function(){
-                sectorElegido = $(this).val();
-                if ($.trim(sectorElegido) != '') {
-                    $.get('categoria',{FK_Id_Sector: sectorElegido}, function(categorias) {
-                        $('#select-categories').empty();
-                        $('#select-categories').append('<option selected>CATEGORIA</option>');
-                        $.each(categorias,function(index, value) {
-                            $('#select-categories').append("<option value='"+ index +"'> "+ value +"</option>");
-                        }); 
-                    });
-                }
-            });
-        });
-        let chosenCategory
-        $('#select-categories').on('change',function() {
-            chosenCategory = $(this).val()
-            console.log(chosenCategory)
-            // tablaInsumos.fnFilter('ABON')
-            tablaInsumos.draw();
-        })
-            
-        $('body').on('click', '.editInsumo', function () {
-                var Id_Insumo = $(this).data('id');
-                $.get("{{ route('stock.index') }}" +'/' + Id_Insumo +'/edit', function (data) {
-                    $('#editBtn').val("edit-book");
-                    $('#modelHeading').html(data.Nombre_Insumo);
-                    $('#editstocksupplie').modal('show');
-                    $('#nrolote').text(data.NroLote);
-                    $('#nroarticulo').text(data.Nro_Articulo);
-                    $('#pdp').text(data.PDP);
-                    $('#stockactual').text(data.Stock_Actual);
-                    $('#Id_Insumo').val(data.Id_Insumo);
-            })
-        })  
- 
-        $('#editBtn').click(function (e) {
-            e.preventDefault();
-            $.ajax({
-                type: "POST",
-                url: "editStock",
-                data: {
-                    'unidades': $('#unidades').val(),
-                    'Id_Insumo': $('#Id_Insumo').val(),
-                },
-                statusCode: {
-                    500: function() {
-                        $('#formeditarinsumo').trigger("reset");
-                        $('#editstocksupplie').modal('hide');
-                        $('#message').html('<div class="alert alert-danger alert-block">'+
-                                        '<button type="button" class="close" data-dismiss="alert">×</button>'+	
-                                        '<strong>Algo anduvo mal, por favor da aviso al administrador</strong>')
-                    },
-                    400: function() {
-                        $('#formeditarinsumo').trigger("reset");
-                        $('#editstocksupplie').modal('hide');
-                        $('#message').html('<div class="alert alert-danger alert-block">'+
-                                        '<button type="button" class="close" data-dismiss="alert">×</button>'+	
-                                        '<strong>No puedes decrementar mas unidades del stock restante</strong>')
+    const sucursal = @json($sucursal);
+    tablaInsumos = $('#table-supplies').DataTable({
+            "processing": true,
+            "serverSide": true,
+            // "ajax": "{{url('api/insumos')}}",
+            "destroy": true,
+            "ajax": {
+                "type": "GET",
+                "url": "getStock",
+                "data": {
+                    "sucursal": sucursal,
                     }
+            },
+            "columns": [
+                    {data: 'Nombre_Insumo'},
+                    {data: 'Nro_Articulo'},
+                    {data: 'NroLote'},
+                    {data: 'Stock_Actual'},
+                    {data: 'PDP'},
+                    {data: 'action', name: 'action', orderable: false, searchable: false},
+                ],
+            "pagingType": "simple",
+            "language": {
+                "info": "_TOTAL_ insumos",
+                "search": "Buscar",
+                "paginate": {
+                    "next": "Siguiente",
+                    "previous": "Anterior",
                 },
-                success: function (data) {
-                    // console.log(data)
+                "lengthMenu": 'Mostrar <select>'+
+                    '<option value="10">10</value>'+
+                    '<option value="20">20</value>'+
+                    '<option value="30">30</value>'+
+                    '<option value="-1">Todos</value>'+
+                    '</select> registros',
+                "loadingRecords": "Cargando...",
+                "processing": "Procesando...",
+                "emptyTable": "No hay datos",
+                "zeroRecords": "No hay concidencias",
+                "infoEmpty": "",
+                "infoFiltered": ""
+            }
+        });
+
+    let sectorElegido
+    $('#select-sectores').on('change',function(){
+        sectorElegido = $(this).val();
+        if ($.trim(sectorElegido) != '') {
+            $.get('categoria',{FK_Id_Sector: sectorElegido}, function(categorias) {
+                $('#select-categories').empty();
+                $('#select-categories').append('<option selected>CATEGORIA</option>');
+                $.each(categorias,function(index, value) {
+                    $('#select-categories').append("<option value='"+ index +"'> "+ value +"</option>");
+                }); 
+            });
+        }
+    });
+
+    let chosenCategory
+    $('#select-categories').on('change',function() {
+        chosenCategory = $(this).val()
+    // $.get('get-supplies',{FK_Id_Categoria: chosenCategory}, function(supplies) {
+    //     console.log(chosenCategory)
+    //     tablaInsumos.clear()
+    //     tablaInsumos.rows.add(supplies);
+    //     tablaInsumos.draw()
+    //     })
+        $.ajax({
+            type: "GET",
+            url: "get-supplies",
+            data: {
+                'FK_Id_Categoria': chosenCategory
+            },
+            dataType: 'json',
+            success: function (data) {
+            tablaInsumos.clear().draw();
+            tablaInsumos.rows.add(data)
+                .draw();                    
+            }
+    })
+})  
+    $('body').on('click', '.editInsumo', function () {
+            var Id_Insumo = $(this).data('id');
+            $.get("{{ route('stock.index') }}" +'/' + Id_Insumo +'/edit', function (data) {
+                $('#editBtn').val("edit-book");
+                $('#modelHeading').html(data.Nombre_Insumo);
+                $('#editstocksupplie').modal('show');
+                $('#nrolote').text(data.NroLote);
+                $('#nroarticulo').text(data.Nro_Articulo);
+                $('#pdp').text(data.PDP);
+                $('#stockactual').text(data.Stock_Actual);
+                $('#Id_Insumo').val(data.Id_Insumo);
+        })
+    })  
+
+    $('#editBtn').click(function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: "editStock",
+            data: {
+                'unidades': $('#unidades').val(),
+                'Id_Insumo': $('#Id_Insumo').val(),
+            },
+            statusCode: {
+                500: function() {
                     $('#formeditarinsumo').trigger("reset");
                     $('#editstocksupplie').modal('hide');
-                    tablaInsumos.draw();
-                    $('#message').html('<div class="alert alert-success alert-block">'+
-                                        '<button type="button" class="close" data-dismiss="alert">×</button>'+	
-                                        '<strong>'+data.insumo+' (Lote Nro: '+data.nroLote+') actualizado correctamente</strong>')   
+                    $('#message').html('<div class="alert alert-danger alert-block">'+
+                                    '<button type="button" class="close" data-dismiss="alert">×</button>'+	
+                                    '<strong>Algo anduvo mal, por favor da aviso al administrador</strong>')
                 },
-                error: function (data) {
-                    console.log('Error: '+data.error);
+                400: function() {
+                    $('#formeditarinsumo').trigger("reset");
+                    $('#editstocksupplie').modal('hide');
+                    $('#message').html('<div class="alert alert-danger alert-block">'+
+                                    '<button type="button" class="close" data-dismiss="alert">×</button>'+	
+                                    '<strong>No puedes decrementar mas unidades del stock restante</strong>')
                 }
-        });
-        });   
+            },
+            success: function (data) {
+                // console.log(data)
+                $('#formeditarinsumo').trigger("reset");
+                $('#editstocksupplie').modal('hide');
+                tablaInsumos.draw();
+                $('#message').html('<div class="alert alert-success alert-block">'+
+                                    '<button type="button" class="close" data-dismiss="alert">×</button>'+	
+                                    '<strong>'+data.insumo+' (Lote Nro: '+data.nroLote+') actualizado correctamente</strong>')   
+            },
+            error: function (data) {
+                console.log('Error: '+data.error);
+            }
     });
+    });   
 
     </script>    
 @endsection
