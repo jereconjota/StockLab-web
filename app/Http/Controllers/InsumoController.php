@@ -56,6 +56,7 @@ class InsumoController extends Controller
             case 2: 
                 $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','=','Extraccion']])
                     ->orWhere('Nombre_Sector','=','Almacen')
+                    ->orWhere('Nombre_Sector','=','Urianalisys')
                     ->orWhere('Nombre_Sector','=','Hematologia')->get();
                 return view('vistas.index',compact('sector','sucursal'));
                 break;
@@ -66,7 +67,7 @@ class InsumoController extends Controller
                 break;
             default:
             return view('errors.ipincorrecta');
-        }  
+        }
     }
 
     public function getPdp(Request $request){
@@ -187,7 +188,7 @@ class InsumoController extends Controller
         }
     }
 
-
+    //este traia los insumos con el change del select categoria
     public function getSupplies(Request $request){
         if ($request->ajax()) {
             $supplies = Insumo::where([['FK_Id_Categoria', $request->FK_Id_Categoria],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0]])->get();
@@ -248,8 +249,9 @@ class InsumoController extends Controller
     //     default:
     //         $sucursal = 0;
     // }
+    $sucursal = $request->session()->get('sucursal');
 
-    $sucursal = $request->sucursal;
+    // $sucursal = $request->sucursal;
     if ($sucursal == 0) {
         $query = Insumo::where([['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0]])->get();
         }elseif ($sucursal == 1) {
@@ -263,7 +265,9 @@ class InsumoController extends Controller
                     ->orWhere([['Fk_Id_Sucursal','=', $sucursal],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0],['Fk_Id_Categoria','=','38']])
                     ->orWhere([['Fk_Id_Sucursal','=', $sucursal],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0],['Fk_Id_Categoria','=','26']])
                     ->orWhere([['Fk_Id_Sucursal','=', $sucursal],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0],['Fk_Id_Categoria','=','27']])
-                    ->orWhere([['Fk_Id_Sucursal','=', $sucursal],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0],['Fk_Id_Categoria','=','28']])->get();
+                    ->orWhere([['Fk_Id_Sucursal','=', $sucursal],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0],['Fk_Id_Categoria','=','28']])
+                    ->orWhere([['Fk_Id_Sucursal','=', $sucursal],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0],['Fk_Id_Categoria','=','42']])
+                    ->orWhere([['Fk_Id_Sucursal','=', $sucursal],['Estado_Insumo', 'Activo'],['Stock_Actual','>', 0],['Fk_Id_Categoria','=','43']])->get();
         } 
     return datatables($query)
         ->addColumn('action', function($row){
@@ -272,6 +276,11 @@ class InsumoController extends Controller
         })
         ->rawColumns(['action'])
         ->toJson();
+    
+    
+
+
+
     }
 
 

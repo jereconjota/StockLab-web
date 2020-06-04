@@ -107,9 +107,9 @@
             "ajax": {
                 "type": "GET",
                 "url": "getStock",
-                "data": {
-                    "sucursal": sucursal,
-                    }
+                // "data": {
+                //     "sucursal": sucursal,
+                //     }
             },
             "columns": [
                     {data: 'Nombre_Insumo'},
