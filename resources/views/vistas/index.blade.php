@@ -8,7 +8,7 @@
     </div>
 
 
-    <div class="row my-2">
+    <div class="row my-2 d-none"> //hided
         <div class="col-md-3">
             <select name="sectors" id="select-sectores" class="browser-default custom-select">
                 <option selected>SECTOR</option>

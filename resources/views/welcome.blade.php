@@ -72,11 +72,11 @@
                 StockLab
                 {{-- <img src="img/iconoStockLab.png" alt=""> --}}
                 @switch($ip)
-                    @case("201.190.237")
+                    @case("201.190.238")
                         <h4>Sede Km3</h4>
                         @break
 
-                    @case("168.228.143")
+                    @case("168.228.142")
                         <h4>Sede Rada Tilly</h4>
                         @break
 
@@ -116,14 +116,14 @@
 
             <div class="links">
                 @switch($ip)
-                    @case("201.190.238")
+                    @case("201.190.237")
                         <a href="http://stock.diagnoslab.com.ar:3333/stock">Actualizar Stock</a>
                         <a href="http://stock.diagnoslab.com.ar:3333/pdp">Ver PDP</a>
                         <a href="http://stock.diagnoslab.com.ar:3333/movimientos">Movimientos</a>
                         <a href="#" data-toggle="modal" data-target="#about">Ayuda</a>
                         @break
 
-                    @case("168.228.143")
+                    @case("168.228.142")
                         <a href="http://stock.diagnoslab.com.ar:3333/stock">Actualizar Stock</a>
                         <a href="http://stock.diagnoslab.com.ar:3333/pdp">Ver PDP</a>
                         <a href="http://stock.diagnoslab.com.ar:3333/movimientos" class="btn disabled" >Movimientos</a>
@@ -145,10 +145,11 @@
                         @break
 
                     @default
-                    <a href="http://stocklab-web.test/stock">Actualizar Stock</a>
-                    <a href="http://stocklab-web.test/pdp">Ver PDP</a>
-                    <a href="http://stocklab-web.test/movimientos" class="btn disabled">Movimientos</a>
+                    <a href="http://192.168.10.241:3333/stock">Actualizar Stock</a>
+                    <a href="http://192.168.10.241:3333/pdp">Ver PDP</a>
+                    <a href="http://192.168.10.241:3333/movimientos" class="btn disabled">Movimientos</a>
                     <a href="#" data-toggle="modal" data-target="#about">Ayuda</a>
+                    @break
                 @endswitch
                 {{-- @switch($sucursal)
                     @case(2)
@@ -224,7 +225,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">StockLab-Web 1.0 ßeta</h5>
+          <h5 class="modal-title">StockLab-Web 1.5</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
