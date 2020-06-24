@@ -48,7 +48,7 @@
         var selected = []
         var tablaInsumos
 
-        switch ('{{$sucursal_session}}') {
+        switch ('{{$sucursal}}') {
             case '2':
                 sucursal = ' - km3'
                 break;

@@ -25,7 +25,7 @@ class InsumoController extends Controller
 
         $ip = $request->ip();
         // $ip = "201.190.237.77";
-        $ip = \substr($ip,0,10);
+        $ip = \substr($ip,0,11);
 
         switch ($ip) {
             case "127.0.0.1":
@@ -33,13 +33,13 @@ class InsumoController extends Controller
                 $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','!=','Administracion']])->get();
                 return view('vistas.index',compact('sector','ip'));    
             break;
-            case "201.190.23":
+            case "201.190.238":
                 $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','=','Extraccion']])
                     ->orWhere('Nombre_Sector','=','Almacen')
                     ->orWhere('Nombre_Sector','=','Hematologia')->get();
                 return view('vistas.index',compact('sector','ip'));
                 break;
-            case "168.228.14": //"168.228.143.XXX" ip dinamica 
+            case "168.228.142": //"168.228.143.XXX" ip dinamica 
                 $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','=','Extraccion']])
                     ->orWhere('Nombre_Sector','=','Almacen')->get();
                 return view('vistas.index',compact('sector','ip'));
@@ -90,10 +90,10 @@ class InsumoController extends Controller
             case "192.168.10": //"192.168.10.241"
                 $sucursal = 1;   
             break;
-            case "201.190.23": //"201.190.237.77"
+            case "201.190.238": //"201.190.237.77"
                 $sucursal = 2;   
                 break;
-            case "168.228.14": //"168.228.143.XXX" ip dinamica 
+            case "168.228.142": //"168.228.143.XXX" ip dinamica 
                 $sucursal = 3;   
                 break;
             default:
@@ -115,7 +115,7 @@ class InsumoController extends Controller
                 $pdps->push($insumo);
             }
         }
-        return view('vistas.pdp',compact('pdps','sucursal_session'));
+        return view('vistas.pdp',compact('pdps','sucursal'));
     }
 
     /**
@@ -201,17 +201,17 @@ class InsumoController extends Controller
 
     public function apiGetInsumos(Request $request){
     $ip = \Request::ip();
-    $ip = "168.228.14";
-    $ip = \substr($ip,0,10);
+    // $ip = "168.228.14";
+    $ip = \substr($ip,0,11);
     $sucursal;
     switch ($ip) {
         case "192.168.10":
             $sucursal = 1;
             break;
-        case "201.190.23":
+        case "201.190.238":
             $sucursal = 2;
             break;
-        case "168.228.14":
+        case "168.228.142":
             $sucursal = 3;
             break;
         case "127.0.0.1":
