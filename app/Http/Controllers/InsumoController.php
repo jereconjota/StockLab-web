@@ -29,7 +29,7 @@ class InsumoController extends Controller
 
         switch ($ip) {
             case "127.0.0.1":
-            case "192.168.10":
+            case "192.168.10.":
                 $sector = Sector::where([['Estado_Sector', 'Activo'],['Nombre_Sector','!=','Administracion']])->get();
                 return view('vistas.index',compact('sector','ip'));    
             break;
@@ -87,7 +87,7 @@ class InsumoController extends Controller
 
         switch ($ip) {
             case "127.0.0.1":
-            case "192.168.10": //"192.168.10.241"
+            case "192.168.10.": //"192.168.10.241"
                 $sucursal = 1;   
             break;
             case "201.190.238": //"201.190.237.77"
@@ -205,7 +205,7 @@ class InsumoController extends Controller
     $ip = \substr($ip,0,11);
     $sucursal;
     switch ($ip) {
-        case "192.168.10":
+        case "192.168.10.":
             $sucursal = 1;
             break;
         case "201.190.238":

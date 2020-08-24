@@ -140,7 +140,7 @@
                     @case("127.0.0.1")
                         <a href="http://stocklab-web.test/stock">Actualizar Stock</a>
                         <a href="http://stocklab-web.test/pdp">Ver PDP</a>
-                        <a href="http://stocklab-web.test/movimientos" class="btn disabled">Movimientos</a>
+                        <a href="http://stocklab-web.test/movimientos" class="btn">Movimientos</a>
                         <a href="#" data-toggle="modal" data-target="#about">Ayuda</a>
                         @break
 

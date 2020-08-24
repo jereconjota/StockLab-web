@@ -126,8 +126,8 @@
                 "select": {
                     rows: {
                         _: "/ %d insumos seleccionados",
-                        0: "/ Haga click en una fila para seleccionarla",
-                        1: "/ 1 insumo seleccionado"
+                        0: "/ Haga click en una fila para seleccionarla, ctrl + click para seleccionar mas de uno",
+                        1: "/ 1 insumo seleccionado, ctrl + click para seleccionar mas de uno"
                     }
                 }
             }

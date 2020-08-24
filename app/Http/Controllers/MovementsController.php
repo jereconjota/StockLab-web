@@ -41,7 +41,7 @@ class MovementsController extends Controller
     $observacion = "observacion";
 
     switch ($ip) {
-        case "192.168.10":
+        case "192.168.10.":
             $sucursal = 'Diagnos';
             break;
         case "201.190.237":
